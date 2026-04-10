@@ -1,0 +1,89 @@
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { sliderImages } from "@/data/products";
+import { motion, AnimatePresence } from "framer-motion";
+
+const HeroSlider = () => {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrent((p) => (p + 1) % sliderImages.length), 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const prev = () => setCurrent((p) => (p - 1 + sliderImages.length) % sliderImages.length);
+  const next = () => setCurrent((p) => (p + 1) % sliderImages.length);
+
+  return (
+    <section className="relative h-[400px] md:h-[500px] overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.7 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={sliderImages[current].url}
+            alt={sliderImages[current].title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
+          <div className="absolute inset-0 flex items-center">
+            <div className="container">
+              <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="max-w-xl"
+              >
+                <h1 className="font-heading text-3xl md:text-5xl font-bold text-primary-foreground mb-3 leading-tight">
+                  {sliderImages[current].title}
+                </h1>
+                <p className="text-primary-foreground/80 text-lg md:text-xl mb-6">
+                  {sliderImages[current].subtitle}
+                </p>
+                <div className="flex gap-3">
+                  <a href="/products">
+                    <button className="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                      Our Products
+                    </button>
+                  </a>
+                  <a href="/contact">
+                    <button className="border-2 border-primary-foreground text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary-foreground/10 transition-colors">
+                      Contact Us
+                    </button>
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Arrows */}
+      <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-card/80 backdrop-blur rounded-full flex items-center justify-center hover:bg-card transition-colors z-10 shadow-lg" aria-label="Previous slide">
+        <ChevronLeft className="w-6 h-6 text-foreground" />
+      </button>
+      <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-card/80 backdrop-blur rounded-full flex items-center justify-center hover:bg-card transition-colors z-10 shadow-lg" aria-label="Next slide">
+        <ChevronRight className="w-6 h-6 text-foreground" />
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {sliderImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-3 h-3 rounded-full transition-all ${i === current ? "bg-secondary w-8" : "bg-primary-foreground/50"}`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default HeroSlider;
