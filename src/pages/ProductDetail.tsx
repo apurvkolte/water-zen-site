@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import EnquiryModal from "@/components/EnquiryModal";
 import { ArrowLeft, ShoppingCart, Phone, CheckCircle } from "lucide-react";
+import SocialShare from "@/components/SocialShare";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -63,14 +64,27 @@ const ProductDetail = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
-                <button onClick={() => setEnquiryOpen(true)} className="gradient-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 justify-center">
+                <motion.button
+                  onClick={() => setEnquiryOpen(true)}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="gradient-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 justify-center"
+                >
                   <ShoppingCart className="w-5 h-5" /> Enquiry Now
-                </button>
-                <a href="tel:8007779657">
+                </motion.button>
+                <motion.a href="tel:8007779657" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                   <button className="w-full border-2 border-primary text-primary px-8 py-3 rounded-lg font-semibold hover:bg-accent transition-colors flex items-center gap-2 justify-center">
                     <Phone className="w-5 h-5" /> Call Now
                   </button>
-                </a>
+                </motion.a>
+              </div>
+
+              {/* Social Share */}
+              <div className="mt-6 pt-6 border-t border-border">
+                <SocialShare
+                  url={`https://sgsro.com/product/${product.id}`}
+                  title={`${product.title} - SGS RO Water Purifier`}
+                />
               </div>
             </motion.div>
           </div>

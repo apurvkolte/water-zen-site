@@ -33,13 +33,20 @@ const Footer = () => {
             </p>
             <div className="flex gap-3">
               {[
-                { icon: Facebook, href: "https://facebook.com/sgsro" },
-                { icon: Instagram, href: "https://instagram.com/sgsro" },
-                { icon: Twitter, href: "https://twitter.com/sgsro" },
-                { icon: Youtube, href: "https://youtube.com/sgsro" },
-              ].map(({ icon: Icon, href }) => (
-                <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary transition-colors">
-                  <Icon className="w-4 h-4" />
+                { icon: Facebook, href: "https://facebook.com/sgsro", hoverBg: "hover:bg-[#1877F2]", label: "Facebook" },
+                { icon: Instagram, href: "https://instagram.com/sgsro", hoverBg: "hover:bg-gradient-to-br hover:from-[#f09433] hover:via-[#e6683c] hover:to-[#bc1888]", label: "Instagram" },
+                { icon: Twitter, href: "https://twitter.com/sgsro", hoverBg: "hover:bg-[#1DA1F2]", label: "Twitter" },
+                { icon: Youtube, href: "https://youtube.com/sgsro", hoverBg: "hover:bg-[#FF0000]", label: "YouTube" },
+              ].map(({ icon: Icon, href, hoverBg, label }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className={`group w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center ${hoverBg} transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-primary-foreground/10`}
+                >
+                  <Icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                 </a>
               ))}
             </div>
@@ -87,8 +94,8 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Back to top */}
-      <button onClick={scrollToTop} className="fixed bottom-6 right-6 w-12 h-12 gradient-primary rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-opacity z-40" aria-label="Back to top">
+      {/* Back to top - repositioned to avoid floating buttons overlap */}
+      <button onClick={scrollToTop} className="fixed bottom-6 left-6 w-12 h-12 gradient-primary rounded-full flex items-center justify-center shadow-lg hover:opacity-90 hover:scale-110 transition-all duration-300 z-40" aria-label="Back to top">
         <ArrowUp className="w-5 h-5 text-primary-foreground" />
       </button>
     </footer>
