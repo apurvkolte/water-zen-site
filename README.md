@@ -1,3 +1,2 @@
-# Welcome to your Lovable project
-
+# Welcome SGSRO
 TODO: Document your project here
