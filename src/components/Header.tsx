@@ -30,7 +30,7 @@ const Header = () => {
       <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
         <div className="container flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center gap-2">
-            <img src="logo.png" alt="SGS RO - Water Purifier" className="h-12 md:h-14 object-contain" />
+            <img src="/logo.png" alt="SGS RO - Water Purifier" className="h-12 md:h-14 object-contain" />
           </Link>
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
