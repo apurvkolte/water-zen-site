@@ -49,9 +49,21 @@ const Contact = () => {
         PUBLIC_KEY
       );
 
-      console.log("SUCCESS", result);
+
+      // ✅ show success toast
+      toast.success("Message sent successfully!");
+
+      // ✅ clear form after success
+      setForm({
+        name: "",
+        mobile: "",
+        email: "",
+        message: "",
+      });
+
     } catch (error) {
       console.log("FULL ERROR:", error);
+      toast.error("Failed to send message. Please try again.");
     }
   };
 
