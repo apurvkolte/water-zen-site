@@ -2,26 +2,57 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const RECEIVER_EMAIL = import.meta.env.VITE_RECEIVER_EMAIL;
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", mobile: "", email: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.mobile.trim() || !form.email.trim() || !form.message.trim()) {
+
+    if (
+      !form.name.trim() ||
+      !form.mobile.trim() ||
+      !form.email.trim() ||
+      !form.message.trim()
+    ) {
       toast.error("Please fill all fields");
       return;
     }
+
     if (!/^\d{10}$/.test(form.mobile)) {
       toast.error("Please enter a valid 10-digit mobile number");
       return;
     }
+
     if (!/\S+@\S+\.\S+/.test(form.email)) {
       toast.error("Please enter a valid email address");
       return;
     }
-    toast.success("Message sent successfully! We'll get back to you soon.");
-    setForm({ name: "", mobile: "", email: "", message: "" });
+
+    try {
+      const result = await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          name: form.name,
+          mobile: form.mobile,
+          email_to: `${RECEIVER_EMAIL}`,
+          email: form.email,
+          message: form.message,
+          time: new Date().toLocaleString(),
+        },
+        PUBLIC_KEY
+      );
+
+      console.log("SUCCESS", result);
+    } catch (error) {
+      console.log("FULL ERROR:", error);
+    }
   };
 
   return (
