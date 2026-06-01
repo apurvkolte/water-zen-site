@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin, Facebook, Instagram, Twitter, Youtube, ArrowUp, Dr
 import { useState } from "react";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PK;
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const RECEIVER_EMAIL = import.meta.env.VITE_RECEIVER_EMAIL;
