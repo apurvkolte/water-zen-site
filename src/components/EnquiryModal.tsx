@@ -2,6 +2,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const RECEIVER_EMAIL = import.meta.env.VITE_RECEIVER_EMAIL;
 
 interface EnquiryModalProps {
   open: boolean;
@@ -12,19 +17,57 @@ interface EnquiryModalProps {
 const EnquiryModal = ({ open, onClose, productName }: EnquiryModalProps) => {
   const [form, setForm] = useState({ name: "", mobile: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!form.name.trim() || !form.mobile.trim()) {
       toast.error("Please fill Name and Mobile number");
       return;
     }
+
     if (!/^\d{10}$/.test(form.mobile)) {
       toast.error("Please enter a valid 10-digit mobile number");
       return;
     }
-    toast.success("Enquiry submitted! We'll call you shortly.");
-    setForm({ name: "", mobile: "", message: "" });
-    onClose();
+
+    try {
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          name: form.name,
+          mobile: form.mobile,
+          email_to: RECEIVER_EMAIL,
+          email: "Product Enquiry",
+          message: `
+Product Enquiry
+
+Product: ${productName}
+
+Customer Name: ${form.name}
+Mobile Number: ${form.mobile}
+
+Message:
+${form.message || "No message provided"}
+        `,
+          time: new Date().toLocaleString(),
+        },
+        PUBLIC_KEY
+      );
+
+      toast.success("Enquiry submitted! We'll call you shortly.");
+
+      setForm({
+        name: "",
+        mobile: "",
+        message: "",
+      });
+
+      onClose();
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      toast.error("Failed to submit enquiry. Please try again.");
+    }
   };
 
   return (
