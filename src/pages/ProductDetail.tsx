@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
@@ -11,6 +11,13 @@ const ProductDetail = () => {
   const product = products.find((p) => p.id === Number(id));
   const [zoomed, setZoomed] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // optional
+    });
+  }, [id]);
 
   if (!product) {
     return (
@@ -52,7 +59,7 @@ const ProductDetail = () => {
             <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col justify-center">
               <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-2">{product.title}</h1>
               <p className="text-secondary font-semibold text-sm uppercase mb-4">{product.category}</p>
-              <p className="text-primary font-bold text-3xl mb-6">₹{product.price.toLocaleString("en-IN")}</p>
+              {/* <p className="text-primary font-bold text-3xl mb-6">₹{product.price.toLocaleString("en-IN")}</p> */}
               <p className="text-muted-foreground leading-relaxed mb-6">{product.description}</p>
 
               <div className="space-y-3 mb-8">
@@ -100,9 +107,15 @@ const ProductDetail = () => {
                       <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <div className="p-4">
-                      <h3 className="font-heading font-semibold text-foreground text-sm line-clamp-1">{p.title}</h3>
-                      <p className="text-primary font-bold mt-1">₹{p.price.toLocaleString("en-IN")}</p>
+                      <h3 className="font-heading font-semibold text-foreground text-sm line-clamp-1 mb-4">{p.title}</h3>
+                      {/* <p className="text-primary font-bold mt-1">₹{p.price.toLocaleString("en-IN")}</p> */}
+                      <Link to={`/product/${p.id}`}>
+                        <button className="w-full gradient-primary text-primary-foreground py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity text-sm">
+                          View Details
+                        </button>
+                      </Link>
                     </div>
+
                   </Link>
                 ))}
               </div>

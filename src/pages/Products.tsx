@@ -36,18 +36,17 @@ const Products = () => {
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
-                      className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                        selectedCategory === cat
+                      className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${selectedCategory === cat
                           ? "bg-primary text-primary-foreground"
                           : "text-foreground hover:bg-accent"
-                      }`}
+                        }`}
                     >
                       {cat}
                     </button>
                   ))}
                 </div>
 
-                <div className="border-t border-border mt-5 pt-5">
+                {/* <div className="border-t border-border mt-5 pt-5">
                   <h3 className="font-heading font-bold text-foreground mb-3">Sort by Price</h3>
                   <select
                     value={sortOrder}
@@ -58,7 +57,7 @@ const Products = () => {
                     <option value="asc">Price: Low to High</option>
                     <option value="desc">Price: High to Low</option>
                   </select>
-                </div>
+                </div> */}
               </div>
             </aside>
 

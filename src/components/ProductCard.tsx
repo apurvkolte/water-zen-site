@@ -22,8 +22,8 @@ const ProductCard = ({ product }: { product: Product }) => (
       </span>
     </div>
     <div className="p-4">
-      <h3 className="font-heading font-semibold text-foreground text-lg mb-1 line-clamp-1">{product.title}</h3>
-      <p className="text-primary font-bold text-xl mb-3">₹{product.price.toLocaleString("en-IN")}</p>
+      <h3 className="font-heading font-semibold text-foreground text-lg mb-1 mb-4 line-clamp-1">{product.title}</h3>
+      {/* <p className="text-primary font-bold text-xl mb-3">₹{product.price.toLocaleString("en-IN")}</p> */}
       <Link to={`/product/${product.id}`}>
         <button className="w-full gradient-primary text-primary-foreground py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity text-sm">
           View Details
