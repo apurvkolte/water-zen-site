@@ -62,7 +62,7 @@ const ProductDetail = () => {
               {/* <p className="text-primary font-bold text-3xl mb-6">₹{product.price.toLocaleString("en-IN")}</p> */}
               <p className="text-muted-foreground leading-relaxed mb-6">{product.description}</p>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 mb-4">
                 <motion.button
                   onClick={() => setEnquiryOpen(true)}
                   whileHover={{ scale: 1.03 }}
@@ -122,7 +122,7 @@ const ProductDetail = () => {
                 </div>
               )}
 
-              <div className="space-y-3 mb-8">
+              <div className="space-y-3 mb-4">
                 {["Free Installation", "1 Year Warranty", "Free Water Testing", "24/7 Support"].map((f) => (
                   <div key={f} className="flex items-center gap-2 text-foreground text-sm">
                     <CheckCircle className="w-4 h-4 text-secondary" /> {f}
