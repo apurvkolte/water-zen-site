@@ -61,6 +61,79 @@ export default defineConfig(({ mode }) => ({
             "src/data/product.json"
           );
 
+          // GET product by id
+          if (
+            req.method === "GET" &&
+            req.url &&
+            req.url !== "/"
+          ) {
+
+            const products: Product[] = JSON.parse(
+              fs.readFileSync(file, "utf8")
+            );
+
+            const id = Number(
+              req.url.replace("/", "")
+            );
+
+            const product = products.find(
+              (p) => p.id === id
+            );
+
+
+            if (!product) {
+              res.statusCode = 404;
+              res.end(JSON.stringify({
+                success: false,
+                message: "Product not found"
+              }));
+              return;
+            }
+
+
+            const related = products
+              .filter(
+                (p) =>
+                  p.category === product.category &&
+                  p.id !== product.id
+              )
+              .slice(0, 4);
+
+
+            res.setHeader(
+              "Content-Type",
+              "application/json"
+            );
+
+
+            res.end(JSON.stringify({
+              success: true,
+              product,
+              related
+            }));
+
+            return;
+          }
+
+
+          // GET all products
+          if (req.method === "GET") {
+
+            const products = fs.readFileSync(
+              file,
+              "utf8"
+            );
+
+            res.setHeader(
+              "Content-Type",
+              "application/json"
+            );
+
+            res.end(products);
+
+            return;
+          }
+
           // GET products
           if (req.method === "GET") {
             const products = fs.readFileSync(file, "utf8");
@@ -73,6 +146,8 @@ export default defineConfig(({ mode }) => ({
             res.end(products);
             return;
           }
+
+
 
           // CREATE / UPDATE product
           if (req.method === "POST") {
@@ -193,6 +268,8 @@ export default defineConfig(({ mode }) => ({
             })
           );
         });
+
+
 
 
         // CATEGORIES API

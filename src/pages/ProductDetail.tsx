@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { products } from "@/data/products";
 import EnquiryModal from "@/components/EnquiryModal";
 import { ArrowLeft, ShoppingCart, Phone, CheckCircle } from "lucide-react";
 import SocialShare from "@/components/SocialShare";
@@ -10,44 +9,33 @@ const ProductDetail = () => {
   const { id } = useParams();
 
   const [product, setProduct] = useState<any>(null);
-  const [products, setProducts] = useState<any[]>([]);
+  const [related, setRelated] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [zoomed, setZoomed] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
 
   useEffect(() => {
-
-    const loadProducts = async () => {
-
+    const loadProduct = async () => {
       try {
-
-        const res = await fetch("/api/products");
-
+        const res = await fetch(`/api/products/${id}`);
         const data = await res.json();
 
-        const list = data.products || data;
+        if (data.success) {
+          setProduct(data.product);
+          setRelated(data.related);
+        }
 
-        setProducts(list);
-
-
-        const found = list.find(
-          (p: any) => p.id === Number(id)
-        );
-
-        setProduct(found);
-
-
-      } catch (error) {
-
-        console.log(error);
-
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-
     };
 
-
-    loadProducts();
+    loadProduct();
 
   }, [id]);
+
 
   useEffect(() => {
     window.scrollTo({
@@ -65,7 +53,7 @@ const ProductDetail = () => {
     );
   }
 
-  const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
+
 
   return (
     <div>
