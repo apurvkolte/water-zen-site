@@ -37,8 +37,8 @@ const Products = () => {
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
                       className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${selectedCategory === cat
-                          ? "bg-primary text-primary-foreground"
-                          : "text-foreground hover:bg-accent"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-foreground hover:bg-accent"
                         }`}
                     >
                       {cat}

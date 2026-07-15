@@ -8,9 +8,46 @@ import SocialShare from "@/components/SocialShare";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const product = products.find((p) => p.id === Number(id));
+
+  const [product, setProduct] = useState<any>(null);
+  const [products, setProducts] = useState<any[]>([]);
   const [zoomed, setZoomed] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
+
+  useEffect(() => {
+
+    const loadProducts = async () => {
+
+      try {
+
+        const res = await fetch("/api/products");
+
+        const data = await res.json();
+
+        const list = data.products || data;
+
+        setProducts(list);
+
+
+        const found = list.find(
+          (p: any) => p.id === Number(id)
+        );
+
+        setProduct(found);
+
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+
+    loadProducts();
+
+  }, [id]);
 
   useEffect(() => {
     window.scrollTo({
