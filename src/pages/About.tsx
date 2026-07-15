@@ -18,7 +18,7 @@ const About = () => {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <img src="/images/about.jpg" alt="SGS RO Water Purifier Pune" className="rounded-2xl shadow-lg w-full" />
+              <img src="https://res.cloudinary.com/juhojyvi/image/upload/v1784105824/about_ozsq6s.png" alt="SGS RO Water Purifier Pune" className="rounded-2xl shadow-lg w-full" />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <span className="text-secondary font-semibold text-sm uppercase tracking-wider">About Shree Gajanan Services</span>

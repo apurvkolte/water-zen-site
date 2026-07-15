@@ -62,6 +62,50 @@ const ProductDetail = () => {
               {/* <p className="text-primary font-bold text-3xl mb-6">₹{product.price.toLocaleString("en-IN")}</p> */}
               <p className="text-muted-foreground leading-relaxed mb-6">{product.description}</p>
 
+              {product.specifications && product.specifications.length > 0 && (
+                <div className="py-6">
+                  <h3 className="text-xl font-semibold mb-5 flex items-center gap-2">
+                    <span className="w-1 h-6"></span>
+                    Product Specifications
+                  </h3>
+
+                  <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table className="w-full min-w-[640px]">
+                      <thead className="bg-gray-50 border-b border-gray-200">
+                        <tr>
+                          <th className="text-left px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            Specification
+                          </th>
+                          <th className="text-left px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            Details
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {product.specifications.map((spec: any, index: number) => (
+                          <tr
+                            key={index}
+                            className={`
+                border-t border-gray-100 
+                ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'}
+                hover:bg-blue-50/30 transition-colors duration-200
+                group
+              `}
+                          >
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
+                              {spec.title}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-600 group-hover:text-gray-800 transition-colors">
+                              {spec.description}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-3 mb-8">
                 {["Free Installation", "1 Year Warranty", "Free Water Testing", "24/7 Support"].map((f) => (
                   <div key={f} className="flex items-center gap-2 text-foreground text-sm">

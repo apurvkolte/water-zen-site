@@ -1,0 +1,286 @@
+[
+  {
+    "id": 1,
+    "title": "Lexpure Seron RO+UV+Alkaline+Silver NANO",
+    "price": 17936,
+    "category": "Lexpure Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104898/lexpure-water-purifier-pune_lq93wl.jpg",
+    "description": "Lexpure Seron RO UV Alkaline Silver NANO water purifier with 7-stage purification technology. Designed for borewell, tanker and municipal water, it provides safe drinking water with advanced antimicrobial protection.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "RO + UV + Alkaline + Silver NANO"
+      },
+      {
+        "title": "Filtration Stages",
+        "description": "7 Stage Water Purification"
+      },
+      {
+        "title": "Storage Capacity",
+        "description": "10 Litres"
+      },
+      {
+        "title": "Suitable Water Source",
+        "description": "Borewell, Tanker and Municipal Water"
+      },
+      {
+        "title": "TDS Range",
+        "description": "Suitable up to 2000 PPM TDS"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Lexpure Ivory Alkaline Ro Water Purifier (Gray)",
+    "price": 14537,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/lex-pure-ivory-ro-water-purifier-price-pune_oodpl0.jpg",
+    "description": "Lexpure Ivory RO Alkaline water purifier available in Pune. Advanced RO UV Alkaline purification system with mineral enhancement for healthy and tasty drinking water.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "RO + UV + Alkaline"
+      },
+      {
+        "title": "Storage Capacity",
+        "description": "10 Litres Food Grade Tank"
+      },
+      {
+        "title": "Purification Capacity",
+        "description": "15-18 Litres Per Hour"
+      },
+      {
+        "title": "Suitable Water Source",
+        "description": "Borewell, Tanker and Municipal Water"
+      },
+      {
+        "title": "TDS Range",
+        "description": "Works up to 2000 PPM TDS"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Lexpure Seron RO+UV+Alkaline+Silver NANO (Refurbished/Promo)",
+    "price": 16992,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/lexpure-seron-ro-alkaline-silver-nano-water-purifier-pune_s3d2zm.webp",
+    "description": "Lexpure Seron Silver NANO RO water purifier for homes. Provides multi-stage purification with alkaline technology and antimicrobial protection for safe family drinking water.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "RO + UV + Alkaline + Silver NANO"
+      },
+      {
+        "title": "Filtration Stages",
+        "description": "7 Stage Purification"
+      },
+      {
+        "title": "Storage Capacity",
+        "description": "10 Litres"
+      },
+      {
+        "title": "Special Feature",
+        "description": "Silver NANO antimicrobial protection"
+      },
+      {
+        "title": "Suitable Water Source",
+        "description": "All domestic water sources"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Lexpure Vedic Alkaline (Black)",
+    "price": 18879,
+    "category": "Lexpure Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104898/lexpure-vedic-alkaline-ro-purifier-black_hrsijj.jpg",
+    "description": "Lexpure Vedic Alkaline RO water purifier in Pune with RO UV Alkaline technology and TDS controller. Ideal for homes using borewell and tanker water with high TDS levels.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "RO + UV + Alkaline + TDS Controller"
+      },
+      {
+        "title": "Filtration Stages",
+        "description": "5 Stage Purification"
+      },
+      {
+        "title": "Storage Capacity",
+        "description": "10 Litres"
+      },
+      {
+        "title": "Booster Pump",
+        "description": "100 GPD High Performance Pump"
+      },
+      {
+        "title": "Suitable Water Source",
+        "description": "Borewell, Tanker and Municipal Water"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Cruze Nobel RO+Alkaline Water Purifier",
+    "price": 16030,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/lexpure-cruze-nobel-ro-alkaline-purifier-pune_q56imj.jpg",
+    "description": "Cruze Nobel RO Alkaline water purifier for Pune and Moshi homes. Heavy-duty purification system with durable MS coated body and high TDS handling capability.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "RO + Alkaline"
+      },
+      {
+        "title": "Purification Capacity",
+        "description": "17-18 Litres Per Hour"
+      },
+      {
+        "title": "Body Material",
+        "description": "M.S. Coated Body"
+      },
+      {
+        "title": "TDS Range",
+        "description": "Suitable up to 2500 PPM TDS"
+      },
+      {
+        "title": "Application",
+        "description": "Residential drinking water purification"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Lexpure PP Spun (Pack of 1)",
+    "price": 177,
+    "category": "Spare Parts",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104897/lexpure-spun-filter-cartridge-pune_h9vi2d.jpg",
+    "description": "Original Lexpure PP Spun filter cartridge for RO water purifiers. Removes dust, sand, rust and suspended particles to improve water quality and protect the RO membrane.",
+    "specifications": [
+      {
+        "title": "Filter Type",
+        "description": "Polypropylene (PP) Spun Filter"
+      },
+      {
+        "title": "Micron Rating",
+        "description": "0.005 Micron Filtration"
+      },
+      {
+        "title": "Usage",
+        "description": "Pre-filter for domestic RO water purifiers"
+      },
+      {
+        "title": "Replacement",
+        "description": "Replace every 3-6 months depending on water quality"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "50 LPH Lexpure RO Water Purifier",
+    "price": 34423,
+    "category": "Commercial Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/lexpure-50-lph-commercial-ro-purifier-pune_kwklfq.jpg",
+    "description": "50 LPH commercial RO water purifier designed for offices, schools, hotels and industries. High-capacity RO system provides continuous purified drinking water.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "Commercial Reverse Osmosis (RO)"
+      },
+      {
+        "title": "Capacity",
+        "description": "50-55 Litres Per Hour"
+      },
+      {
+        "title": "Application",
+        "description": "Office, School, Hotel and Industrial Use"
+      },
+      {
+        "title": "Water Source",
+        "description": "Borewell, Tanker and Municipal Water"
+      },
+      {
+        "title": "Warranty",
+        "description": "1 Year Warranty"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "25 LPH Commercial RO Water Purifier",
+    "price": 19116,
+    "category": "Commercial Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/commercial-ro-water-purifier-25-lph-pune_pqb2ld.jpg",
+    "description": "25 LPH commercial RO water purifier available in Pune for offices, clinics and businesses. Provides safe drinking water through advanced multi-stage purification.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "5 Stage RO Purification System"
+      },
+      {
+        "title": "Purification Capacity",
+        "description": "25 Litres Per Hour"
+      },
+      {
+        "title": "Suitable For",
+        "description": "Offices, Clinics, Shops and Commercial Places"
+      },
+      {
+        "title": "Installation",
+        "description": "Professional installation available"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Purosis Water Purifier (RO+UV+TDS+Alkaline)",
+    "price": 14868,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104898/purosis-ro-uv-tds-alkaline-water-purifier-in-pune_cxo1sz.jpg",
+    "description": "Purosis RO UV TDS Alkaline water purifier for homes. Advanced purification removes bacteria, viruses, heavy metals and improves taste with alkaline technology.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "RO + UV + TDS Controller + Alkaline"
+      },
+      {
+        "title": "Storage Capacity",
+        "description": "9 Litres"
+      },
+      {
+        "title": "Impurity Removal",
+        "description": "Removes bacteria, viruses, heavy metals and dissolved salts"
+      },
+      {
+        "title": "Usage",
+        "description": "Domestic Home Water Purification"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Finepure Water Purifier (RO+TDS+Copper+Alkaline)",
+    "price": 13806,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104886/finepure-ro-tds-copper-alkaline-water-purifier-pune_j96qij.jpg",
+    "description": "Finepure Copper Alkaline RO water purifier with advanced filtration technology. Provides safe drinking water by removing harmful impurities.",
+    "specifications": [
+      {
+        "title": "Purification Technology",
+        "description": "RO + TDS + Copper + Alkaline"
+      },
+      {
+        "title": "Storage Capacity",
+        "description": "9 Litres"
+      },
+      {
+        "title": "Special Feature",
+        "description": "Copper infused alkaline water"
+      },
+      {
+        "title": "Removes",
+        "description": "Arsenic, rust, pesticides and dissolved impurities"
+      }
+    ]
+  }
+]

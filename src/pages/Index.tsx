@@ -30,11 +30,10 @@ const Index = () => {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === cat
-                    ? "gradient-primary text-primary-foreground shadow-md"
-                    : "bg-card text-foreground border border-border hover:border-primary"
-                }`}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${activeCategory === cat
+                  ? "gradient-primary text-primary-foreground shadow-md"
+                  : "bg-card text-foreground border border-border hover:border-primary"
+                  }`}
               >
                 {cat}
               </button>

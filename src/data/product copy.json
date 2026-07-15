@@ -1,0 +1,138 @@
+[
+  {
+    "id": 1,
+    "title": "Lexpure Seron RO+UV+Alkaline+Silver NANO",
+    "price": 17936,
+    "category": "Lexpure Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104898/lexpure-water-purifier-pune_lq93wl.jpg",
+    "description": "7 Stage Purification | 10L Storage | Antimicrobial Defense with Silver NANO. Suitable for Borewell, Tanker & Municipal Water (TDS up to 2000 PPM)."
+  },
+  {
+    "id": 2,
+    "title": "Lexpure Ivory Alkaline Ro Water Purifier (Gray)",
+    "price": 14537,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/lex-pure-ivory-ro-water-purifier-price-pune_oodpl0.jpg",
+    "description": "5-Stage RO+UV+Alkaline purification. 10L Food Grade storage tank. 15-18 LPH capacity. Works up to 2000 ppm TDS."
+  },
+  {
+    "id": 3,
+    "title": "Lexpure Seron RO+UV+Alkaline+Silver NANO (Refurbished/Promo)",
+    "price": 16992,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/lexpure-seron-ro-alkaline-silver-nano-water-purifier-pune_s3d2zm.webp",
+    "description": "7-Stage purification featuring Silver NANO technology for antimicrobial defense. 10L capacity, ideal for all water sources."
+  },
+  {
+    "id": 4,
+    "title": "Lexpure Vedic Alkaline (Black)",
+    "price": 18879,
+    "category": "Lexpure Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104898/lexpure-vedic-alkaline-ro-purifier-black_hrsijj.jpg",
+    "description": "RO + UV + Alkaline + TDS controller. 5-Stage purification with 10L storage. High-performance 100 GPD booster pump."
+  },
+  {
+    "id": 5,
+    "title": "Cruze Nobel RO+Alkaline Water Purifier",
+    "price": 16030,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/lexpure-cruze-nobel-ro-alkaline-purifier-pune_q56imj.jpg",
+    "description": "M.S. Coated Body RO+Alkaline purifier. Capacity: 17-18 LPH. Heavy-duty performance for TDS up to 2500 ppm."
+  },
+  {
+    "id": 6,
+    "title": "Lexpure PP Spun (Pack of 1)",
+    "price": 177,
+    "category": "Spare Parts",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104897/lexpure-spun-filter-cartridge-pune_h9vi2d.jpg",
+    "description": "0.005 Micron Polypropylene filter. Essential pre-filter for all domestic RO systems. 3-month shelf life."
+  },
+  {
+    "id": 7,
+    "title": "50 LPH Lexpure RO Water Purifier",
+    "price": 34423,
+    "category": "Commercial Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/lexpure-50-lph-commercial-ro-purifier-pune_kwklfq.jpg",
+    "description": "Commercial grade 5-stage Reverse Osmosis system. 50-55 Litres per hour capacity. Includes 1-year warranty."
+  },
+  {
+    "id": 8,
+    "title": "25 LPH Commercial RO Water Purifier",
+    "price": 19116,
+    "category": "Commercial Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104887/commercial-ro-water-purifier-25-lph-pune_pqb2ld.jpg",
+    "description": "Ideal for offices and clinics. 25 LPH purification capacity. 5-stage RO system with free installation in Pune."
+  },
+  {
+    "id": 9,
+    "title": "Purosis Water Purifier (RO+UV+TDS+Alkaline)",
+    "price": 14868,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104898/purosis-ro-uv-tds-alkaline-water-purifier-in-pune_cxo1sz.jpg",
+    "description": "Advanced filtration removing 99.99% bacteria and heavy metals. 9L storage capacity with modern compact design."
+  },
+  {
+    "id": 10,
+    "title": "Finepure Water Purifier (RO+TDS+Copper+Alkaline)",
+    "price": 13806,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104886/finepure-ro-tds-copper-alkaline-water-purifier-pune_j96qij.jpg",
+    "description": "Premium copper-infused alkaline purification. Effectively removes arsenic, rust, and pesticides. 9L capacity."
+  },
+  {
+    "id": 11,
+    "title": "Lexpure PP Spun (Pack of 3)",
+    "price": 501,
+    "category": "Spare Parts",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104888/lexpure-spun-filter-cartridge-products-pune_punp0u.jpg",
+    "description": "Value pack of 3 PP Spun filters. High-quality 0.005 micron filtration for domestic water purifiers."
+  },
+  {
+    "id": 12,
+    "title": "Lexpure PP Spun (Pack of 5)",
+    "price": 725,
+    "category": "Spare Parts",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784104899/lexpure-spun-filter-cartridge-water-filter-pune_h3x6qn.png",
+    "description": "Bulk pack of 6 PP Spun filters. Polypropylene material compatible with all electric water purifiers."
+  },
+  {
+    "id": 14,
+    "title": "ss",
+    "price": 432,
+    "category": "Alkaline Water purifier",
+    "image": "fdsf",
+    "description": "dff"
+  },
+  {
+    "id": 15,
+    "title": "sd",
+    "price": 3,
+    "category": "Alkaline Water purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784099530/qjljrzbmsvwxbudwn7xo.jpg",
+    "description": "The Aqua Classic RO + UV is a domestic wall-mounted water purifier designed for homes using borewell, tanker, or municipal water. It combines Reverse Osmosis (RO) and Ultraviolet (UV) purification with a TDS Controller to provide safe and good-tasting drinking water. �\nAqua Purifiers\nSpecification\nDetails\n\nModel : Aqua Classic RO + UV\nPurification Technology: RO + UV + TDS \nSuitable Water Source : \nBorewell, Tanker & Municipal Water\nPurification Capacity : Up to 12 LPH\nStorage Capacity : 7 Litres\nTank Material : Food-Grade ABS Plastic\nPower Consumption : 24 Watts\nInstallation : Wall Mounted\nAuto Shut-Off\n\nTDS Controller\n\nWarranty\n1 Year \nKey Features\nRO + UV dual purification for safe drinking water.\nRemoves bacteria, viruses, heavy metals, dissolved salts, and harmful impurities.\nTDS controller helps retain essential minerals for better taste.\nAutomatic tank full cut-off to save electricity and water.\nCompact, stylish design suitable for modern kitchens.\nLow power consumption with easy maintenance. �\nAqua Purifiers",
+    "specifications": [
+      {
+        "title": "",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "sass",
+    "price": 123,
+    "category": "Commercial Water Purifier",
+    "image": "https://res.cloudinary.com/juhojyvi/image/upload/v1784107032/rw9i9wffctaujzg2kvcr.jpg",
+    "description": "sasas dasasasasa",
+    "specifications": [
+      {
+        "title": "zice",
+        "description": "red"
+      },
+      {
+        "title": "dsd",
+        "description": "dsd1"
+      }
+    ]
+  }
+]
