@@ -1,14 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import HeroSlider from "@/components/HeroSlider";
 import ProductCard from "@/components/ProductCard";
-import { products, categories, features, serviceAreas } from "@/data/products";
+import { categories, features, serviceAreas } from "@/data/products";
+import { getProducts, Product } from "@/services/products";
 import { Shield, Droplets, Award, Wrench, Phone, Star, CheckCircle, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
+
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error("Products load failed", error);
+      }
+    };
+
+    loadProducts();
+
+  }, []);
+
+
   const [activeCategory, setActiveCategory] = useState("All");
-  const filtered = activeCategory === "All" ? products.slice(0, 8) : products.filter((p) => p.category === activeCategory).slice(0, 8);
+  const filtered =
+    activeCategory === "All"
+      ? products.slice(0, 8)
+      : products
+        .filter((p) => p.category === activeCategory)
+        .slice(0, 8);
+
 
   return (
     <div>

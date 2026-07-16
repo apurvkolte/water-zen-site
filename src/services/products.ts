@@ -1,7 +1,16 @@
-const API_URL = "/.netlify/functions/products";
+import {
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc,
+    getDoc
+} from "firebase/firestore";
+
+import { db } from "@/firebase/config";
 
 
-// Product type
 export interface Product {
 
     id?: string;
@@ -25,71 +34,68 @@ export interface Product {
 
 
 
-
-
 // GET ALL PRODUCTS
 export async function getProducts(): Promise<Product[]> {
 
-    const res = await fetch(API_URL);
+    const snapshot = await getDocs(
+        collection(db, "products")
+    );
 
 
-    const data = await res.json();
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Failed to load products"
-        );
-
-    }
-
-
-    return data.products;
+    return snapshot.docs.map(item => ({
+        id: item.id,
+        ...item.data()
+    })) as Product[];
 
 }
-
-
 
 
 
 // GET SINGLE PRODUCT + RELATED PRODUCTS
-export async function getProductById(
-    id: string
-) {
+export async function getProductById(id: string) {
 
-
-    const res = await fetch(
-        `${API_URL}?id=${id}`
+    const productSnap = await getDoc(
+        doc(db, "products", id)
     );
 
 
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Product not found"
-        );
-
+    if (!productSnap.exists()) {
+        throw new Error("Product not found");
     }
+
+
+    const product = {
+        id: productSnap.id,
+        ...productSnap.data()
+    } as Product;
+
+
+
+    const relatedSnap = await getDocs(
+        collection(db, "products")
+    );
+
+
+    const related = relatedSnap.docs
+        .map(item => ({
+            id: item.id,
+            ...item.data()
+        }) as Product)
+        .filter(
+            item =>
+                item.category === product.category &&
+                item.id !== product.id
+        )
+        .slice(0, 4);
 
 
 
     return {
-
-        product: data.product,
-
-        related: data.related || []
-
+        product,
+        related
     };
 
 }
-
-
-
 
 
 // CREATE PRODUCT
@@ -97,41 +103,25 @@ export async function createProduct(
     product: Product
 ) {
 
-
-    const res = await fetch(
-        API_URL,
+    const ref = await addDoc(
+        collection(db, "products"),
         {
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(product)
+            title: product.title,
+            price: product.price,
+            category: product.category,
+            image: product.image,
+            description: product.description,
+            specifications: product.specifications || []
         }
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Create failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true,
+        id: ref.id
+    };
 
 }
-
-
 
 
 
@@ -140,43 +130,33 @@ export async function updateProduct(
     product: Product
 ) {
 
+    if (!product.id) {
+        throw new Error("Product id missing");
+    }
 
-    const res = await fetch(
-        API_URL,
+
+    await updateDoc(
+        doc(
+            db,
+            "products",
+            product.id
+        ),
         {
-
-            method: "PUT",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(product)
-
+            title: product.title,
+            price: product.price,
+            category: product.category,
+            image: product.image,
+            description: product.description,
+            specifications: product.specifications || []
         }
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Update failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true
+    };
 
 }
-
-
 
 
 
@@ -186,39 +166,20 @@ export async function deleteProduct(
 ) {
 
 
-    const res = await fetch(
-        API_URL,
-        {
-
-            method: "DELETE",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                id
-            })
-
-        }
+    await deleteDoc(
+        doc(
+            db,
+            "products",
+            id
+        )
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Delete failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true
+    };
 
 }
+
+
+

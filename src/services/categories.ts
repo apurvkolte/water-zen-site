@@ -1,4 +1,13 @@
-const API_URL = "/.netlify/functions/categories";
+import {
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
+} from "firebase/firestore";
+
+import { db } from "@/firebase/config";
 
 
 // Category type
@@ -8,33 +17,20 @@ export interface Category {
 }
 
 
-
-
-
 // GET ALL CATEGORIES
 export async function getCategories(): Promise<Category[]> {
 
-    const res = await fetch(API_URL);
+    const snapshot = await getDocs(
+        collection(db, "categories")
+    );
 
 
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Failed to load categories"
-        );
-
-    }
-
-
-    return data.categories;
+    return snapshot.docs.map((item) => ({
+        id: item.id,
+        ...item.data()
+    })) as Category[];
 
 }
-
-
 
 
 
@@ -43,45 +39,20 @@ export async function createCategory(
     name: string
 ) {
 
-
-    const res = await fetch(
-        API_URL,
+    const ref = await addDoc(
+        collection(db, "categories"),
         {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                name
-            })
-
+            name
         }
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Category create failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true,
+        id: ref.id
+    };
 
 }
-
-
 
 
 
@@ -91,47 +62,19 @@ export async function updateCategory(
     name: string
 ) {
 
-
-    const res = await fetch(
-        API_URL,
+    await updateDoc(
+        doc(db, "categories", id),
         {
-
-            method: "PUT",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                id,
-                name
-            })
-
+            name
         }
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Category update failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true
+    };
 
 }
-
-
-
 
 
 // DELETE CATEGORY
@@ -139,40 +82,13 @@ export async function deleteCategory(
     id: string
 ) {
 
-
-    const res = await fetch(
-        API_URL,
-        {
-
-            method: "DELETE",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                id
-            })
-
-        }
+    await deleteDoc(
+        doc(db, "categories", id)
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Category delete failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true
+    };
 
 }

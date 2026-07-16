@@ -2,27 +2,54 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { products, categories, sliderImages } from '@/data/products';
+// import { products, categories, sliderImages } from '@/data/products';
 import ProductModal from '@/components/admin/ProductModal';
 import CategoryModal from '@/components/admin/CategoryModal';
 import BannerModal from '@/components/admin/BannerModal';
 
+import {
+    deleteProduct,
+    getProducts
+} from "@/services/products";
+
+import {
+    deleteCategory,
+    getCategories
+} from "@/services/categories";
+
+import {
+    deleteBanner,
+    getBanners
+} from "@/services/banners";
+
+
+
+
+import { Banner } from "@/services/banners";
+import { Category } from "@/services/categories";
+import { Product } from "@/services/products"
+
 // Sample data stores - in production, use a database
-let productData = [...products];
-let categoryData = [...categories];
-let bannerData = [...sliderImages];
+// let productData = [...products];
+// let categoryData = [...categories];
+// let bannerData = [...sliderImages];
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<'products' | 'categories' | 'banners'>('products');
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [selectedBanner, setSelectedBanner] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [localProducts, setLocalProducts] = useState(productData);
-    const [localCategories, setLocalCategories] = useState(categoryData);
-    const [localBanners, setLocalBanners] = useState(bannerData);
+    // const [localProducts, setLocalProducts] = useState(productData);
+    // const [localCategories, setLocalCategories] = useState(categoryData);
+    // const [localBanners, setLocalBanners] = useState(bannerData);
     const [isLoading, setIsLoading] = useState(true);
+
+
+    const [localProducts, setLocalProducts] = useState<Product[]>([]);
+    const [localCategories, setLocalCategories] = useState<Category[]>([]);
+    const [localBanners, setLocalBanners] = useState<Banner[]>([]);
 
     useEffect(() => {
         const isAdmin = localStorage.getItem('adminAuth');
@@ -32,6 +59,48 @@ const AdminDashboard = () => {
             setIsLoading(false);
         }
     }, [navigate]);
+
+
+    useEffect(() => {
+
+        const loadData = async () => {
+
+            try {
+
+                const [
+                    productsData,
+                    categoriesData,
+                    bannersData
+                ] = await Promise.all([
+                    getProducts(),
+                    getCategories(),
+                    getBanners()
+                ]);
+
+
+                setLocalProducts(productsData);
+
+                setLocalCategories(categoriesData);
+
+                setLocalBanners(bannersData);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Load admin data failed:",
+                    error
+                );
+
+            }
+
+        };
+
+
+        loadData();
+
+
+    }, []);
 
     const handleLogout = () => {
         localStorage.removeItem('adminAuth');
@@ -48,161 +117,121 @@ const AdminDashboard = () => {
         setIsModalOpen(true);
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const load = async () => {
-            const res = await fetch("/api/products");
-            const data = await res.json();
+    //     const load = async () => {
+    //         const res = await fetch("/api/products");
+    //         const data = await res.json();
 
-            setLocalProducts(data);
-        };
+    //         setLocalProducts(data);
+    //     };
 
-        load();
+    //     load();
 
-    }, []);
-
-
-    const handleDeleteProduct = async (id: number) => {
-        if (window.confirm('Are you sure you want to delete this product?')) {
-
-            const response = await fetch("/api/products", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    id: id
-                })
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-
-                setLocalProducts(prev =>
-                    prev.filter(product => product.id !== id)
-                );
-
-            }
-        }
-
-    };
-
-    const handleSaveProduct = (product: any) => {
-
-        setLocalProducts(prev => {
-
-            const exists = prev.some(
-                p => p.id === product.id
-            );
-
-            if (exists) {
-                return prev.map(p =>
-                    p.id === product.id
-                        ? product
-                        : p
-                );
-            }
-
-            return [
-                ...prev,
-                product
-            ];
-        });
-
-        setIsModalOpen(false);
-    };
-
-    const handleAddCategory = () => {
-        setSelectedCategory(null);
-        setIsModalOpen(true);
-    };
-
-    const handleEditCategory = (category: string) => {
-        setSelectedCategory(category);
-        setIsModalOpen(true);
-    };
-
-    const handleDeleteCategory = async (category: string) => {
-
-        if (category === "All") {
-            alert('Cannot delete "All" category');
-            return;
-        }
+    // }, []);
 
 
-        if (!window.confirm(`Are you sure you want to delete "${category}"?`)) {
+    const handleDeleteProduct = async (id: string) => {
+
+        if (!window.confirm("Delete product?")) {
             return;
         }
 
 
         try {
 
-            const response = await fetch("/api/categories", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    category
-                }),
-            });
+            await deleteProduct(id);
 
 
-            const result = await response.json();
+            setLocalProducts(prev =>
+                prev.filter(
+                    product => product.id !== id
+                )
+            );
 
-            console.log("DELETE CATEGORY:", result);
-
-
-            if (result.success) {
-
-                // update UI
-                setLocalCategories(prev =>
-                    prev.filter(c => c !== category)
-                );
-
-
-                // update temporary data
-                categoryData = categoryData.filter(
-                    c => c !== category
-                );
-
-            } else {
-
-                alert("Category delete failed");
-
-            }
 
         } catch (error) {
 
-            console.error("Delete category error:", error);
-            alert("Something went wrong");
+            console.error(error);
+
+            alert("Product delete failed");
 
         }
 
     };
 
-    const handleSaveCategory = (oldName: string | null, newName: string) => {
-        if (oldName) {
-            // Edit existing
-            setLocalCategories(prev => prev.map(c => c === oldName ? newName : c));
-            const index = categoryData.indexOf(oldName);
-            if (index !== -1) categoryData[index] = newName;
+    const handleSaveProduct = async () => {
 
-            // Update products with new category name
-            setLocalProducts(prev => prev.map(p =>
-                p.category === oldName ? { ...p, category: newName } : p
-            ));
-            productData = productData.map(p =>
-                p.category === oldName ? { ...p, category: newName } : p
-            );
-        } else {
-            // Add new
-            setLocalCategories(prev => [...prev, newName]);
-            categoryData.push(newName);
-        }
+        const data = await getProducts();
+
+        setLocalProducts(data);
+
         setIsModalOpen(false);
+
     };
+
+
+    const handleAddCategory = () => {
+        setSelectedCategory(null);
+        setIsModalOpen(true);
+    };
+
+    const handleEditCategory = (category: Category) => {
+        setSelectedCategory(category);
+        setIsModalOpen(true);
+    };
+
+    const handleDeleteCategory = async (
+        category: Category
+    ) => {
+
+
+        if (category.name === "All") {
+            alert("Cannot delete All category");
+            return;
+        }
+
+
+        if (!window.confirm(`Delete ${category.name}?`)) {
+            return;
+        }
+
+
+        try {
+
+            await deleteCategory(
+                category.id!
+            );
+
+
+            setLocalCategories(prev =>
+                prev.filter(
+                    c => c.id !== category.id
+                )
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Category delete failed");
+
+        }
+
+    };
+
+    const handleSaveCategory = async () => {
+
+        const data = await getCategories();
+
+        setLocalCategories(data);
+
+        setIsModalOpen(false);
+
+    };
+
+
 
     const handleAddBanner = () => {
         setSelectedBanner(null);
@@ -214,74 +243,62 @@ const AdminDashboard = () => {
         setIsModalOpen(true);
     };
 
-    const handleDeleteBanner = async (index: number) => {
+    const handleDeleteBanner = async (
+        id: string
+    ) => {
 
 
-        if (!window.confirm("Delete banner?"))
+        if (!window.confirm("Delete banner?")) {
             return;
+        }
 
 
-        const res = await fetch("/api/banners", {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                index
-            })
-        });
+        try {
 
 
-        const result = await res.json();
+            await deleteBanner(id);
 
-
-        if (result.success) {
 
             setLocalBanners(prev =>
-                prev.filter((_, i) => i !== index)
+                prev.filter(
+                    banner => banner.id !== id
+                )
             );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Banner delete failed");
 
         }
 
     };
 
     const handleSaveBanner = async (
-        banner: any,
-        index: number | null
+        banner: Banner
     ) => {
 
+        try {
 
-        const response = await fetch("/api/banners", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                ...banner,
-                index
-            })
-        });
-
-
-        const result = await response.json();
-
-
-        if (result.success) {
-
-
-            const res = await fetch("/api/banners");
-
-            const data = await res.json();
-
+            const data = await getBanners();
 
             setLocalBanners(data);
 
-
             setIsModalOpen(false);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Banner save failed");
 
         }
 
     };
+
 
     if (isLoading) {
         return (
@@ -373,7 +390,7 @@ const AdminDashboard = () => {
                                                         Edit
                                                     </button>
                                                     <button
-                                                        onClick={() => handleDeleteProduct(product.id)}
+                                                        onClick={() => handleDeleteProduct(product.id!)}
                                                         className="text-red-600 hover:text-red-800"
                                                     >
                                                         Delete
@@ -417,22 +434,22 @@ const AdminDashboard = () => {
                                     {localCategories.map((category, index) => (
                                         <tr key={index} className="hover:bg-gray-50">
                                             <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{index + 1}</td>
-                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{category}</td>
+                                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{category.name}</td>
                                             <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {localProducts.filter(p => p.category === category).length}
+                                                {localProducts.filter(p => p.category === category.name).length}
                                             </td>
                                             <td className="px-4 py-4 whitespace-nowrap text-sm">
                                                 <button
                                                     onClick={() => handleEditCategory(category)}
                                                     className="text-blue-600 hover:text-blue-800 mr-3"
-                                                    disabled={category === 'All'}
+                                                    disabled={category.name === 'All'}
                                                 >
                                                     Edit
                                                 </button>
                                                 <button
                                                     onClick={() => handleDeleteCategory(category)}
                                                     className="text-red-600 hover:text-red-800"
-                                                    disabled={category === 'All'}
+                                                    disabled={category.name === 'All'}
                                                 >
                                                     Delete
                                                 </button>
@@ -462,7 +479,7 @@ const AdminDashboard = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {localBanners.map((banner, index) => (
-                                <div key={index} className="bg-white rounded-xl shadow overflow-hidden">
+                                <div key={banner.id} className="bg-white rounded-xl shadow overflow-hidden">
                                     <div className="relative h-48 bg-gray-100">
                                         <img
                                             src={banner.url}
@@ -478,13 +495,13 @@ const AdminDashboard = () => {
                                         <p className="text-sm text-gray-600 mt-1">{banner.subtitle}</p>
                                         <div className="mt-4 flex space-x-2">
                                             <button
-                                                onClick={() => handleEditBanner({ ...banner, index })}
+                                                onClick={() => handleEditBanner(banner)}
                                                 className="flex-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
                                             >
                                                 Edit
                                             </button>
                                             <button
-                                                onClick={() => handleDeleteBanner(index)}
+                                                onClick={() => handleDeleteBanner(banner.id!)}
                                                 className="flex-1 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm"
                                             >
                                                 Delete

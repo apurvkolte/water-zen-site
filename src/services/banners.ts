@@ -1,7 +1,15 @@
-const API_URL = "/.netlify/functions/banners";
+import {
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
+} from "firebase/firestore";
+
+import { db } from "@/firebase/config";
 
 
-// Banner type
 export interface Banner {
 
     id?: string;
@@ -16,86 +24,44 @@ export interface Banner {
 
 
 
-
-
 // GET ALL BANNERS
 export async function getBanners(): Promise<Banner[]> {
 
-    const res = await fetch(API_URL);
+    const snapshot = await getDocs(
+        collection(db, "banners")
+    );
 
 
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Failed to load banners"
-        );
-
-    }
-
-
-
-    return data.banners;
+    return snapshot.docs.map((item) => ({
+        id: item.id,
+        ...item.data()
+    })) as Banner[];
 
 }
 
 
 
-
-
-// ADD BANNER
+// CREATE BANNER
 export async function createBanner(
     banner: Banner
 ) {
 
-
-    const res = await fetch(
-        API_URL,
+    const ref = await addDoc(
+        collection(db, "banners"),
         {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-                url: banner.url,
-
-                title: banner.title || "",
-
-                subtitle: banner.subtitle || ""
-
-            })
-
+            url: banner.url,
+            title: banner.title || "",
+            subtitle: banner.subtitle || ""
         }
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Banner create failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true,
+        id: ref.id
+    };
 
 }
-
-
 
 
 
@@ -104,53 +70,26 @@ export async function updateBanner(
     banner: Banner
 ) {
 
+    if (!banner.id) {
+        throw new Error("Banner id missing");
+    }
 
-    const res = await fetch(
-        API_URL,
+
+    await updateDoc(
+        doc(db, "banners", banner.id),
         {
-
-            method: "PUT",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-                id: banner.id,
-
-                url: banner.url,
-
-                title: banner.title || "",
-
-                subtitle: banner.subtitle || ""
-
-            })
-
+            url: banner.url,
+            title: banner.title || "",
+            subtitle: banner.subtitle || ""
         }
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Banner update failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true
+    };
 
 }
-
-
 
 
 
@@ -159,40 +98,13 @@ export async function deleteBanner(
     id: string
 ) {
 
-
-    const res = await fetch(
-        API_URL,
-        {
-
-            method: "DELETE",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                id
-            })
-
-        }
+    await deleteDoc(
+        doc(db, "banners", id)
     );
 
 
-
-    const data = await res.json();
-
-
-
-    if (!data.success) {
-
-        throw new Error(
-            data.message || "Banner delete failed"
-        );
-
-    }
-
-
-
-    return data;
+    return {
+        success: true
+    };
 
 }

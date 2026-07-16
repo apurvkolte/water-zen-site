@@ -22,6 +22,7 @@ export const products: Product[] = productData;
 
 
 export interface SliderImage {
+  id?: string;
   url: string;
   title: string;
   subtitle: string;

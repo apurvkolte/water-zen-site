@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import type { Product } from "@/data/products";
+// import type { Product } from "@/data/products";
+import type { Product } from "@/services/products";
 
 const ProductCard = ({ product }: { product: Product }) => (
   <motion.div

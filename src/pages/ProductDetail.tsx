@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { products } from "@/data/products";
+// import { products } from "@/data/products";
+import { getProductById } from "@/services/products";
+import { Product } from "@/services/products";
 import EnquiryModal from "@/components/EnquiryModal";
 import { ArrowLeft, ShoppingCart, Phone, CheckCircle } from "lucide-react";
 import SocialShare from "@/components/SocialShare";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const product = products.find((p) => p.id === Number(id));
+
+  const [product, setProduct] = useState<Product | null>(null);
+  const [related, setRelated] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [zoomed, setZoomed] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
 
@@ -19,6 +24,53 @@ const ProductDetail = () => {
     });
   }, [id]);
 
+  useEffect(() => {
+
+    const loadProduct = async () => {
+
+      try {
+
+        setLoading(true);
+
+        const data = await getProductById(id!);
+
+
+        setProduct(data.product);
+
+        setRelated(data.related || []);
+
+
+      } catch (error) {
+
+        console.error(
+          "Product load failed:",
+          error
+        );
+
+      }
+      finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+
+    if (id) {
+      loadProduct();
+    }
+
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="section-padding text-center">
+        Loading product...
+      </div>
+    );
+  }
+
   if (!product) {
     return (
       <div className="section-padding text-center">
@@ -28,7 +80,7 @@ const ProductDetail = () => {
     );
   }
 
-  const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
+  // const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   return (
     <div>

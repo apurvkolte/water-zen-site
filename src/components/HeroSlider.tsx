@@ -1,22 +1,91 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { sliderImages } from "@/data/products";
+// import { banner } from "@/data/products";
+import { getBanners, Banner } from "@/services/banners";
 
 
 const HeroSlider = () => {
+  const [banners, setBanners] = useState<Banner[]>([]);
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => setCurrent((p) => (p + 1) % sliderImages.length), 5000);
-    return () => clearInterval(timer);
+
+    const loadBanners = async () => {
+
+      try {
+
+        const data = await getBanners();
+
+        setBanners(data);
+
+      } catch (error) {
+
+        console.error(
+          "Failed to load banners:",
+          error
+        );
+
+      }
+
+    };
+
+
+    loadBanners();
+
   }, []);
 
-  const prev = () =>
-    setCurrent((p) => (p - 1 + sliderImages.length) % sliderImages.length);
 
-  const next = () =>
-    setCurrent((p) => (p + 1) % sliderImages.length);
+
+  useEffect(() => {
+
+    if (banners.length === 0) return;
+
+
+    const timer = setInterval(() => {
+
+      setCurrent(
+        prev => (prev + 1) % banners.length
+      );
+
+    }, 5000);
+
+
+    return () => clearInterval(timer);
+
+
+  }, [banners]);
+
+
+
+  const prev = () => {
+
+    setCurrent(
+      p => (p - 1 + banners.length) % banners.length
+    );
+
+  };
+
+
+
+  const next = () => {
+
+    setCurrent(
+      p => (p + 1) % banners.length
+    );
+
+  };
+
+
+
+  if (banners.length === 0) {
+
+    return null;
+
+  }
+
+
+  const banner = banners[current];
 
   return (
     <section className="relative h-[400px] md:h-[500px] overflow-hidden">
@@ -30,8 +99,8 @@ const HeroSlider = () => {
           className="absolute inset-0"
         >
           <img
-            src={sliderImages[current].url}
-            alt={sliderImages[current].title}
+            src={banner.url}
+            alt={banner.title}
             className="w-full h-full object-cover"
             width={1920}
             height={800}
@@ -51,7 +120,7 @@ const HeroSlider = () => {
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="font-heading text-3xl md:text-5xl font-bold text-primary-foreground mb-3 leading-tight drop-shadow-lg"
                 >
-                  {sliderImages[current].title}
+                  {banner.title}
                 </motion.h1>
                 <motion.p
                   initial={{ opacity: 0, x: -30 }}
@@ -59,7 +128,7 @@ const HeroSlider = () => {
                   transition={{ delay: 0.55, duration: 0.5 }}
                   className="text-primary-foreground/90 text-lg md:text-xl mb-6 drop-shadow"
                 >
-                  {sliderImages[current].subtitle}
+                  {banner.subtitle}
                 </motion.p>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -93,7 +162,7 @@ const HeroSlider = () => {
 
       {/* Dots */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {sliderImages.map((_, i) => (
+        {banners.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}

@@ -2,11 +2,20 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+import { Banner, createBanner, updateBanner } from "@/services/banners";
+
 interface BannerModalProps {
-    banner: any;
-    onSave: (banner: any, index: number | null) => void;
+
+    banner: Banner | null;
+
+    onSave: (
+        banner: Banner
+    ) => void;
+
     onClose: () => void;
+
 }
+
 
 const BannerModal = ({ banner, onSave, onClose }: BannerModalProps) => {
     const [formData, setFormData] = useState({
@@ -97,48 +106,43 @@ const BannerModal = ({ banner, onSave, onClose }: BannerModalProps) => {
 
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (
+        e: React.FormEvent
+    ) => {
+
         e.preventDefault();
 
         try {
 
             const bannerData = {
-                ...formData,
-                index: banner?.index
+                id: banner?.id,
+                url: formData.url,
+                title: formData.title,
+                subtitle: formData.subtitle
             };
 
 
-            const response = await fetch("/api/banners", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(bannerData)
-            });
+            if (banner?.id) {
 
-
-            const result = await response.json();
-
-
-            if (result.success) {
-
-                onSave(
-                    formData,
-                    banner?.index !== undefined ? banner.index : null
-                );
-
-                onClose();
+                await updateBanner(bannerData);
 
             } else {
 
-                alert("Failed to save banner");
+                await createBanner(bannerData);
 
             }
 
+            onSave(
+                bannerData
+            );
+
+            onClose();
+
+
         } catch (error) {
 
-            console.error("Save banner error:", error);
-            alert("Something went wrong");
+            console.error(error);
+            alert("Failed to save banner");
 
         }
     };

@@ -2,10 +2,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Trash2 } from "lucide-react";
+import { createProduct, updateProduct } from "@/services/products";
+import { Category } from "@/services/categories";
 
 interface ProductModalProps {
     product: any;
-    categories: string[];
+    categories: Category[];
     onSave: (product: any) => void;
     onClose: () => void;
 }
@@ -65,20 +67,58 @@ const ProductModal = ({ product, categories, onSave, onClose }: ProductModalProp
     };
 
     useEffect(() => {
+
         if (product) {
-            setFormData(product);
+
+            setFormData({
+                id: product.id || 0,
+                title: product.title || "",
+                price: product.price || 0,
+                category: product.category || "",
+                image: product.image || "",
+                description: product.description || ""
+            });
+
+
+            setSpecifications(
+                product.specifications?.length
+                    ? product.specifications
+                    : [
+                        {
+                            title: "",
+                            description: ""
+                        }
+                    ]
+            );
+
+
         } else {
-            const firstCategory = categories.find(c => c !== 'All') || categories[0] || '';
+
+            const firstCategory =
+                categories.find(c => c.name !== "All")?.name || "";
+
+
             setFormData({
                 id: 0,
-                title: '',
+                title: "",
                 price: 0,
                 category: firstCategory,
-                image: '',
-                description: ''
+                image: "",
+                description: ""
             });
+
+
+            setSpecifications([
+                {
+                    title: "",
+                    description: ""
+                }
+            ]);
+
         }
+
     }, [product, categories]);
+
 
 
     const [uploading, setUploading] = useState(false);
@@ -148,34 +188,86 @@ const ProductModal = ({ product, categories, onSave, onClose }: ProductModalProp
 
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (
+        e: React.FormEvent
+    ) => {
+
         e.preventDefault();
 
+
         try {
-            const response = await fetch("/api/products", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    specifications
-                }),
-            });
 
-            const result = await response.json();
+            const productData = {
+                id: product?.id,
+                title: formData.title,
+                price: formData.price,
+                category: formData.category,
+                image: formData.image,
+                description: formData.description,
+                specifications
+            };
 
-            if (result.success) {
-                onSave(result.product);
-                onClose();
+
+            let result;
+
+
+            if (product?.id) {
+
+                // UPDATE
+                result = await updateProduct(
+                    productData
+                );
+
+
             } else {
-                alert("Failed to save product");
+
+
+                // CREATE
+                result = await createProduct(
+                    productData
+                );
+
             }
 
+
+
+            if (result.success) {
+
+
+                onSave(
+                    productData
+                );
+
+
+                onClose();
+
+
+            } else {
+
+
+                alert(
+                    "Failed to save product"
+                );
+
+            }
+
+
+
         } catch (error) {
-            console.error("Save product error:", error);
-            alert("Something went wrong");
+
+
+            console.error(
+                "Save product error:",
+                error
+            );
+
+
+            alert(
+                "Something went wrong"
+            );
+
         }
+
     };
 
     useEffect(() => {
@@ -184,22 +276,10 @@ const ProductModal = ({ product, categories, onSave, onClose }: ProductModalProp
 
             setFormData(product);
 
-            setSpecifications(
-                product.specifications || [
-                    {
-                        title: "",
-                        description: ""
-                    }
-                ]
-            );
-
-        }
-        else {
+        } else {
 
             const firstCategory =
-                categories.find(c => c !== "All") ||
-                categories[0] ||
-                "";
+                categories.find(c => c.name !== "All")?.name || "";
 
             setFormData({
                 id: 0,
@@ -210,17 +290,10 @@ const ProductModal = ({ product, categories, onSave, onClose }: ProductModalProp
                 description: ""
             });
 
-
-            setSpecifications([
-                {
-                    title: "",
-                    description: ""
-                }
-            ]);
-
         }
 
     }, [product, categories]);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -272,9 +345,17 @@ const ProductModal = ({ product, categories, onSave, onClose }: ProductModalProp
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                 required
                             >
-                                {categories.filter(c => c !== 'All').map((cat) => (
-                                    <option key={cat} value={cat}>{cat}</option>
-                                ))}
+                                {categories
+                                    .filter(c => c.name !== "All")
+                                    .map((cat) => (
+                                        <option
+                                            key={cat.id}
+                                            value={cat.name}
+                                        >
+                                            {cat.name}
+                                        </option>
+                                    ))}
+
                             </select>
                         </div>
 

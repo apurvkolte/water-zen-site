@@ -1,22 +1,31 @@
 // src/components/admin/CategoryModal.tsx
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { createCategory, updateCategory } from "@/services/categories";
+import { Category } from "@/services/categories";
+
 
 interface CategoryModalProps {
-    category: string | null;
-    categories: string[];
-    onSave: (oldName: string | null, newName: string) => void;
+    category: Category | null;
+    categories: Category[];
+    onSave: (
+        oldCategory: Category | null,
+        newName: string
+    ) => void;
     onClose: () => void;
 }
+
 
 const CategoryModal = ({ category, categories, onSave, onClose }: CategoryModalProps) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
-        setName(category || '');
+        setName(category?.name || '');
     }, [category]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (
+        e: React.FormEvent
+    ) => {
         e.preventDefault();
 
         const newName = name.trim();
@@ -24,11 +33,10 @@ const CategoryModal = ({ category, categories, onSave, onClose }: CategoryModalP
         if (!newName) return;
 
 
-        // Check duplicate category
         const exists = categories.some(
             (cat) =>
-                cat.toLowerCase() === newName.toLowerCase() &&
-                cat !== category
+                cat.name.toLowerCase() === newName.toLowerCase() &&
+                cat.id !== category?.id
         );
 
 
@@ -39,29 +47,42 @@ const CategoryModal = ({ category, categories, onSave, onClose }: CategoryModalP
 
 
         try {
-            const response = await fetch("/api/categories", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    oldName: category,
-                    newName,
-                }),
-            });
+            if (category) {
 
+                await updateCategory(
+                    category.id!,
+                    newName
+                );
 
-            const result = await response.json();
+            } else {
 
+                await createCategory(
+                    newName
+                );
 
-            if (result.success) {
-                onSave(category, newName);
-                onClose();
             }
 
+
+            onSave(
+                category,
+                newName
+            );
+
+
+            onClose();
+
+
         } catch (error) {
-            console.error(error);
-            alert("Something went wrong");
+
+            console.error(
+                "Category save error:",
+                error
+            );
+
+            alert(
+                "Failed to save category"
+            );
+
         }
     };
 

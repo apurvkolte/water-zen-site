@@ -1,18 +1,118 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import ProductCard from "@/components/ProductCard";
-import { products, categories } from "@/data/products";
+// import { products, categories } from "@/data/products";
+import { getProducts, Product } from "@/services/products";
+import { getCategories, Category } from "@/services/categories";
 
 const Products = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>(["All"]);
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState<"default" | "asc" | "desc">("default");
 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // optional
+    });
+  }, []);
+
+  useEffect(() => {
+
+    const loadData = async () => {
+
+      try {
+
+        const [
+          productsData,
+          categoriesData
+        ] = await Promise.all([
+          getProducts(),
+          getCategories()
+        ]);
+
+
+        setProducts(productsData);
+
+
+        setCategories([
+          "All",
+          ...categoriesData.map(
+            (cat: Category) => cat.name
+          )
+        ]);
+
+
+      } catch (error) {
+
+        console.error(
+          "Load products failed:",
+          error
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+
+    loadData();
+
+  }, []);
+
+
+
   const filtered = useMemo(() => {
-    let list = selectedCategory === "All" ? [...products] : products.filter((p) => p.category === selectedCategory);
-    if (sortOrder === "asc") list.sort((a, b) => a.price - b.price);
-    if (sortOrder === "desc") list.sort((a, b) => b.price - a.price);
+
+    let list =
+      selectedCategory === "All"
+        ? [...products]
+        : products.filter(
+          p => p.category === selectedCategory
+        );
+
+
+    if (sortOrder === "asc") {
+      list.sort(
+        (a, b) => a.price - b.price
+      );
+    }
+
+
+    if (sortOrder === "desc") {
+      list.sort(
+        (a, b) => b.price - a.price
+      );
+    }
+
+
     return list;
-  }, [selectedCategory, sortOrder]);
+
+  }, [
+    selectedCategory,
+    sortOrder,
+    products
+  ]);
+
+
+
+  if (loading) {
+
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading products...
+      </div>
+    );
+
+  }
+
 
   return (
     <div>

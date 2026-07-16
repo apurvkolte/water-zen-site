@@ -1,8 +1,18 @@
 import { motion } from "framer-motion";
 import { Award, Users, Droplets, Target, CheckCircle, MapPin } from "lucide-react";
 import { serviceAreas } from "@/data/products";
+import { useEffect } from "react";
 
 const About = () => {
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // optional
+    });
+  }, []);
+
+
   return (
     <div>
       {/* Banner */}
