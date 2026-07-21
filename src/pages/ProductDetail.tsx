@@ -7,14 +7,20 @@ import { Product } from "@/services/products";
 import EnquiryModal from "@/components/EnquiryModal";
 import { ArrowLeft, ShoppingCart, Phone, CheckCircle } from "lucide-react";
 import SocialShare from "@/components/SocialShare";
+import { Link as LinkIcon } from "lucide-react";
+import { toast } from 'react-toastify';
 
 const ProductDetail = () => {
   const { id } = useParams();
 
+  const [showCopyToast, setShowCopyToast] = useState(false);
+  const [currentURL, setCurrentURL] = useState("");
+
   const [product, setProduct] = useState<Product | null>(null);
   const [related, setRelated] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [zoomed, setZoomed] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState("0% 0%");
+  const [isZoom, setIsZoom] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
 
   useEffect(() => {
@@ -63,9 +69,43 @@ const ProductDetail = () => {
 
   }, [id]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentURL(window.location.href);
+    }
+  }, []);
+
+  const handleCopyLink = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    try {
+      await navigator.clipboard.writeText(currentURL);
+      setShowCopyToast(true);
+
+      setTimeout(() => {
+        setShowCopyToast(false);
+      }, 2000);
+
+    } catch (err) {
+      toast.error("Failed to copy link");
+    }
+  };
+
+  const handleZoom = (e: React.MouseEvent<HTMLDivElement>) => {
+    const zoomer = e.currentTarget;
+    const rect = zoomer.getBoundingClientRect();
+
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    setZoomPosition(`${x}% ${y}%`);
+  };
+
+
+
   if (loading) {
     return (
-      <div className="section-padding text-center">
+      <div className="section-padding py-5 text-center">
         Loading product...
       </div>
     );
@@ -73,7 +113,7 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="section-padding text-center">
+      <div className="section-padding py-5 text-center">
         <p className="text-muted-foreground text-lg">Product not found.</p>
         <Link to="/products" className="text-primary font-semibold mt-4 inline-block">← Back to Products</Link>
       </div>
@@ -84,8 +124,8 @@ const ProductDetail = () => {
 
   return (
     <div>
-      <section className="section-padding">
-        <div className="container">
+      <section className="section-padding py-5">
+        <div className="container px-2 md:px-8">
           <Link to="/products" className="flex items-center gap-2 text-primary font-medium mb-6 hover:underline">
             <ArrowLeft className="w-4 h-4" /> Back to Products
           </Link>
@@ -94,14 +134,60 @@ const ProductDetail = () => {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              className="relative overflow-hidden rounded-2xl bg-muted cursor-zoom-in aspect-square"
-              onClick={() => setZoomed(!zoomed)}
+              className="relative overflow-hidden rounded-2xl bg-white cursor-zoom-in aspect-square"
+              onMouseMove={handleZoom}
+              onMouseEnter={() => setIsZoom(true)}
+              onMouseLeave={() => {
+                setIsZoom(false);
+                setZoomPosition("0% 0%");
+              }}
             >
-              <img
-                src={product.image}
-                alt={product.title}
-                className={`w-full h-full object-cover transition-transform duration-500 ${zoomed ? "scale-150" : "scale-100"}`}
-              />
+
+              <div
+                className="w-full h-full flex items-center justify-center"
+                style={{
+                  backgroundImage: isZoom ? `url(${product.image})` : "none",
+                  backgroundSize: "200%",
+                  backgroundPosition: zoomPosition,
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+
+                <div className="relative w-full h-full  shadow-lg overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className={`w-full h-full object-contain transition-opacity duration-500 ${isZoom ? "opacity-0" : "opacity-100"
+                      }`}
+                  />
+                </div>
+
+
+                {/* Copy Link Button */}
+                <button
+                  onClick={handleCopyLink}
+                  title="Copy link"
+                  className="
+      absolute 
+      top-3 
+      right-3 
+      w-10 
+      h-10 
+      rounded-full 
+      bg-white 
+      shadow-md 
+      flex 
+      items-center 
+      justify-center
+      hover:bg-gray-100
+      transition
+    "
+                >
+                  <LinkIcon className="w-5 h-5 text-gray-700" />
+                </button>
+              </div>
+
+
               <span className="absolute top-4 left-4 bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1 rounded-full">
                 {product.category}
               </span>
@@ -129,50 +215,37 @@ const ProductDetail = () => {
                   </button>
                 </motion.a>
               </div>
-
               {product.specifications && product.specifications.length > 0 && (
-                <div className="py-6">
-                  <h3 className="text-xl font-semibold mb-5 flex items-center gap-2">
-                    <span className="w-1 h-6"></span>
+                <section className="py-8">
+                  <h3 className="mb-6 text-xl font-semibold text-gray-900">
                     Product Specifications
                   </h3>
 
-                  <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-                    <table className="w-full min-w-[640px]">
-                      <thead className="bg-gray-50 border-b border-gray-200">
-                        <tr>
-                          <th className="text-left px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Specification
-                          </th>
-                          <th className="text-left px-6 py-4 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            Details
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {product.specifications.map((spec: any, index: number) => (
-                          <tr
-                            key={index}
-                            className={`
-                border-t border-gray-100 
-                ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'}
-                hover:bg-blue-50/30 transition-colors duration-200
-                group
-              `}
-                          >
-                            <td className="px-6 py-4 text-sm font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
-                              {spec.title}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-600 group-hover:text-gray-800 transition-colors">
-                              {spec.description}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                    {product.specifications.map((spec: any, index: number) => (
+                      <div
+                        key={index}
+                        className={`
+            grid grid-cols-[120px_1fr] sm:grid-cols-[160px_1fr] md:grid-cols-[220px_1fr]
+            border-b border-gray-200 last:border-b-0
+            ${index % 2 === 0 ? "bg-white" : "bg-gray-50/60"}
+            transition-colors duration-200 hover:bg-blue-50/40
+          `}
+                      >
+                        <div className="border-r border-gray-200 bg-gray-50 px-4 py-4 text-sm font-semibold text-gray-700">
+                          {spec.title}
+                        </div>
+
+                        <div className="px-4 py-4 text-sm leading-6 text-gray-700 break-words">
+                          {spec.description}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
+                </section>
               )}
+
+
 
               <div className="space-y-3 mb-4">
                 {["Free Installation", "1 Year Warranty", "Free Water Testing", "24/7 Support"].map((f) => (
@@ -195,35 +268,68 @@ const ProductDetail = () => {
           </div>
 
           {/* Related */}
-          {related.length > 0 && (
-            <div className="mt-16">
-              <h2 className="font-heading text-2xl font-bold text-foreground mb-6">Related Products</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {related.map((p) => (
-                  <Link key={p.id} to={`/product/${p.id}`} className="glass-card hover-lift overflow-hidden group">
-                    <div className="aspect-square overflow-hidden bg-muted">
-                      <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-heading font-semibold text-foreground text-sm line-clamp-1 mb-4">{p.title}</h3>
-                      {/* <p className="text-primary font-bold mt-1">₹{p.price.toLocaleString("en-IN")}</p> */}
-                      <Link to={`/product/${p.id}`}>
-                        <button className="w-full gradient-primary text-primary-foreground py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity text-sm">
-                          View Details
-                        </button>
-                      </Link>
-                    </div>
+          {
+            related.length > 0 && (
+              <div className="mt-10 md:mt-16 py-8 md:py-12">
+                <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-6 md:mb-8">
+                  Related Products
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {related.map((p) => (
+                    <Link key={p.id} to={`/product/${p.id}`} className="glass-card hover-lift overflow-hidden group">
+                      <div className="aspect-square overflow-hidden bg-muted">
+                        <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-heading font-semibold text-foreground text-sm line-clamp-1 mb-4">{p.title}</h3>
+                        {/* <p className="text-primary font-bold mt-1">₹{p.price.toLocaleString("en-IN")}</p> */}
+                        <Link to={`/product/${p.id}`}>
+                          <button className="w-full gradient-primary text-primary-foreground py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity text-sm">
+                            View Details
+                          </button>
+                        </Link>
+                      </div>
 
-                  </Link>
-                ))}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      </section>
+            )
+          }
+
+
+          {
+            showCopyToast && (
+              <div className="fixed bottom-5 right-5 z-50">
+                <div className="bg-white rounded-lg shadow-xl border overflow-hidden w-72">
+
+                  <div className="bg-green-600 text-white px-4 py-2 flex justify-between items-center">
+                    <span className="font-semibold">
+                      Success!
+                    </span>
+
+                    <button
+                      onClick={() => setShowCopyToast(false)}
+                      className="text-white text-lg"
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  <div className="px-4 py-3 text-gray-700 text-sm">
+                    Link copied to clipboard!
+                  </div>
+
+                </div>
+              </div>
+            )
+          }
+
+        </div >
+      </section >
 
       <EnquiryModal open={enquiryOpen} onClose={() => setEnquiryOpen(false)} productName={product.title} />
-    </div>
+    </div >
   );
 };
 

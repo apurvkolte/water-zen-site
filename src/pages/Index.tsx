@@ -11,6 +11,14 @@ const Index = () => {
 
   const [products, setProducts] = useState<Product[]>([]);
 
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // optional
+    });
+  }, []);
+
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -42,7 +50,7 @@ const Index = () => {
 
       {/* Category Tabs + Products */}
       <section className="section-padding">
-        <div className="container">
+        <div className="container px-0 md:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
             <span className="text-secondary font-semibold text-sm uppercase tracking-wider">Our Products</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2">Best Water Purifiers in Pune</h2>
@@ -84,7 +92,7 @@ const Index = () => {
 
       {/* Features */}
       <section className="section-padding water-bg">
-        <div className="container">
+        <div className="container px-0 md:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <span className="text-secondary font-semibold text-sm uppercase tracking-wider">Why Choose Us</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2">Features & Advantages</h2>
@@ -110,7 +118,7 @@ const Index = () => {
 
       {/* Stats */}
       <section className="section-padding gradient-hero text-primary-foreground">
-        <div className="container">
+        <div className="container px-0 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { icon: Award, value: "10+", label: "Years Experience" },
@@ -130,7 +138,7 @@ const Index = () => {
 
       {/* Services Section */}
       <section className="section-padding">
-        <div className="container">
+        <div className="container px-0 md:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <span className="text-secondary font-semibold text-sm uppercase tracking-wider">Our Services</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2">Water Purifier Services in Pune</h2>
@@ -156,7 +164,7 @@ const Index = () => {
 
       {/* Service Areas */}
       <section className="section-padding water-bg">
-        <div className="container">
+        <div className="container px-0 md:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
             <span className="text-secondary font-semibold text-sm uppercase tracking-wider">Service Areas</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2">We Serve Across Pune & PCMC</h2>
@@ -174,7 +182,7 @@ const Index = () => {
 
       {/* Testimonials */}
       <section className="section-padding">
-        <div className="container">
+        <div className="container px-0 md:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
             <span className="text-secondary font-semibold text-sm uppercase tracking-wider">Testimonials</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2">What Our Customers Say</h2>
@@ -205,7 +213,7 @@ const Index = () => {
 
       {/* CTA */}
       <section className="section-padding gradient-hero text-primary-foreground">
-        <div className="container text-center">
+        <div className="container px-0 md:px-8 md:text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Looking for the Best Water Purifier in Pune?</h2>
             <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8">Get a free water quality test and expert consultation. We serve Moshi, Talegaon, Ravet, Pimpri Chinchwad, and all over PCMC.</p>

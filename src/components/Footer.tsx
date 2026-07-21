@@ -85,10 +85,10 @@ const Footer = () => {
             </p>
             <div className="flex gap-3">
               {[
-                { icon: Facebook, href: "https://facebook.com/sgsro", hoverBg: "hover:bg-[#1877F2]", label: "Facebook" },
-                { icon: Instagram, href: "https://instagram.com/sgsro", hoverBg: "hover:bg-gradient-to-br hover:from-[#f09433] hover:via-[#e6683c] hover:to-[#bc1888]", label: "Instagram" },
-                { icon: Twitter, href: "https://twitter.com/sgsro", hoverBg: "hover:bg-[#1DA1F2]", label: "Twitter" },
-                { icon: Youtube, href: "https://youtube.com/sgsro", hoverBg: "hover:bg-[#FF0000]", label: "YouTube" },
+                { icon: Facebook, href: "https://www.facebook.com/rowaterpurifierspune/", hoverBg: "hover:bg-[#1877F2]", label: "Facebook" },
+                { icon: Instagram, href: "https://www.instagram.com/p/DbAU1DWoOUk", hoverBg: "hover:bg-gradient-to-br hover:from-[#f09433] hover:via-[#e6683c] hover:to-[#bc1888]", label: "Instagram" },
+                // { icon: Twitter, href: "https://twitter.com/sgsro", hoverBg: "hover:bg-[#1DA1F2]", label: "Twitter" },
+                // { icon: Youtube, href: "https://youtube.com/sgsro", hoverBg: "hover:bg-[#FF0000]", label: "YouTube" },
               ].map(({ icon: Icon, href, hoverBg, label }) => (
                 <a
                   key={href}
@@ -149,8 +149,9 @@ const Footer = () => {
       </div>
 
       {/* Back to top - repositioned to avoid floating buttons overlap */}
-      <button onClick={scrollToTop} className="fixed bottom-6 right-6 w-12 h-12 gradient-primary rounded-full flex items-center justify-center shadow-lg hover:opacity-90 hover:scale-110 transition-all duration-300 z-40" aria-label="Back to top">
-        <ArrowUp className="w-5 h-5 text-primary-foreground" />
+
+      <button onClick={scrollToTop} className="fixed bottom-6 right-2 md:right-6 w-12 h-12 gradient-primary rounded-full flex items-center justify-center shadow-lg hover:opacity-90 hover:scale-110 transition-all duration-300 z-40" aria-label="Back to top">
+        <ArrowUp className="w-7 h-7 text-primary-foreground" />
       </button>
     </footer>
   );

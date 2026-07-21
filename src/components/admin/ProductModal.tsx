@@ -461,67 +461,43 @@ const ProductModal = ({ product, categories, onSave, onClose }: ProductModalProp
 
                                 </div>
 
-
-
                                 <div className="space-y-3">
+                                    {specifications.map((spec, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex flex-col md:flex-row gap-3 items-stretch md:items-start border p-3 rounded-lg bg-white"
+                                        >
+                                            <input
+                                                type="text"
+                                                placeholder="Specification title"
+                                                value={spec.title}
+                                                onChange={(e) =>
+                                                    updateSpecification(index, "title", e.target.value)
+                                                }
+                                                className="w-full md:flex-1 px-3 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+                                            />
 
+                                            <input
+                                                type="text"
+                                                placeholder="Specification description"
+                                                value={spec.description}
+                                                onChange={(e) =>
+                                                    updateSpecification(index, "description", e.target.value)
+                                                }
+                                                className="w-full md:flex-1 px-3 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+                                            />
 
-                                    {
-                                        specifications.map((spec, index) => (
-
-                                            <div
-                                                key={index}
-                                                className="flex gap-2 items-start border p-3 rounded-lg"
+                                            <button
+                                                type="button"
+                                                onClick={() => removeSpecification(index)}
+                                                className="self-end md:self-start text-red-600 p-2 hover:bg-red-50 rounded-lg"
                                             >
-
-
-                                                <input
-                                                    type="text"
-                                                    placeholder="Specification title"
-                                                    value={spec.title}
-                                                    onChange={(e) =>
-                                                        updateSpecification(
-                                                            index,
-                                                            "title",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    className="flex-1 px-3 py-2 border rounded-lg"
-                                                />
-
-
-
-                                                <input
-                                                    type="text"
-                                                    placeholder="Specification description"
-                                                    value={spec.description}
-                                                    onChange={(e) =>
-                                                        updateSpecification(
-                                                            index,
-                                                            "description",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    className="flex-1 px-3 py-2 border rounded-lg"
-                                                />
-
-
-
-                                                <button
-                                                    type="button"
-                                                    onClick={() => removeSpecification(index)}
-                                                    className="text-red-600 mt-2"
-                                                >
-
-                                                    <Trash2 size={20} />
-
-                                                </button>
-                                            </div>
-
-                                        ))
-                                    }
-
+                                                <Trash2 size={20} />
+                                            </button>
+                                        </div>
+                                    ))}
                                 </div>
+
                             </div>
 
                             <div className="flex justify-end space-x-3 pt-4 border-t">

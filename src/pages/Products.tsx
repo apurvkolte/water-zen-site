@@ -118,14 +118,14 @@ const Products = () => {
     <div>
       {/* Page Banner */}
       <section className="gradient-hero text-primary-foreground py-16">
-        <div className="container text-center">
+        <div className="container   text-center">
           <h1 className="font-heading text-3xl md:text-5xl font-bold mb-3">Our Products</h1>
           <p className="text-primary-foreground/80 max-w-xl mx-auto">Explore the best RO, UV, UF & Alkaline water purifiers in Pune. Quality you can trust.</p>
         </div>
       </section>
 
       <section className="section-padding">
-        <div className="container">
+        <div className="container px-2 md:px-8">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Sidebar Filters */}
             <aside className="lg:w-64 shrink-0">
@@ -166,7 +166,7 @@ const Products = () => {
               <div className="flex justify-between items-center mb-6">
                 <p className="text-muted-foreground text-sm">{filtered.length} products found</p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 ">
                 {filtered.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}

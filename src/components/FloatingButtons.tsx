@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Phone, X, MessageCircle, Send } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 
@@ -46,16 +47,16 @@ const FloatingButtons = () => {
   return (
     <>
       {/* Floating Buttons */}
-      <div className="fixed bottom-24 right-6 z-50 flex flex-col gap-3">
+      <div className="fixed bottom-20 right-2 md:bottom-24 md:right-6 z-50 flex flex-col gap-2 md:gap-3">
         {/* WhatsApp */}
         <motion.button
           onClick={() => setShowForm(true)}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
+          className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
           aria-label="WhatsApp Enquiry"
         >
-          <MessageCircle className="w-7 h-7" />
+          <FaWhatsapp className="w-7 h-7 md:w-9 md:h-9" />
         </motion.button>
 
         {/* Call */}
@@ -63,10 +64,10 @@ const FloatingButtons = () => {
           href="tel:8007779657"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full gradient-primary text-primary-foreground flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
+          className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-cyan-600 text-white flex items-center justify-center shadow-lg hover:bg-cyan-700 hover:shadow-xl "
           aria-label="Call Now"
         >
-          <Phone className="w-7 h-7 animate-pulse" />
+          <Phone className="w-7 h-7  animate-pulse" />
         </motion.a>
       </div>
 
@@ -92,7 +93,7 @@ const FloatingButtons = () => {
               <div className="gradient-primary p-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                    <MessageCircle className="w-5 h-5 text-primary-foreground" />
+                    <MessageCircle className="w-5 h-5 md:w-7 md:h-7  text-primary-foreground" />
                   </div>
                   <div>
                     <h3 className="font-heading font-bold text-primary-foreground">WhatsApp Enquiry</h3>
@@ -100,7 +101,7 @@ const FloatingButtons = () => {
                   </div>
                 </div>
                 <button onClick={() => setShowForm(false)} className="text-primary-foreground/80 hover:text-primary-foreground">
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 md:w-7 md:h-7 " />
                 </button>
               </div>
 
@@ -148,7 +149,7 @@ const FloatingButtons = () => {
                   type="submit"
                   className="w-full bg-[#25D366] text-white py-3 rounded-lg font-semibold hover:bg-[#20BD5A] transition-colors flex items-center justify-center gap-2"
                 >
-                  <Send className="w-5 h-5" /> Send via WhatsApp
+                  <Send className="w-5 h-5 md:w-7 md:h-7 " /> Send via WhatsApp
                 </motion.button>
               </form>
             </motion.div>

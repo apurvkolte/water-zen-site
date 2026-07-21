@@ -78,14 +78,14 @@ const Contact = () => {
     <div>
       {/* Banner */}
       <section className="gradient-hero text-primary-foreground py-16">
-        <div className="container text-center">
+        <div className="container px-2 md:px-8 text-center">
           <h1 className="font-heading text-3xl md:text-5xl font-bold mb-3">Contact Us</h1>
           <p className="text-primary-foreground/80 max-w-xl mx-auto">Get in touch for water purifier enquiry, installation, or service in Pune & PCMC</p>
         </div>
       </section>
 
       <section className="section-padding">
-        <div className="container">
+        <div className="container px-2 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>

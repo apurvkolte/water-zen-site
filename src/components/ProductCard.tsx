@@ -9,7 +9,7 @@ const ProductCard = ({ product }: { product: Product }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.4 }}
-    className="glass-card hover-lift overflow-hidden group"
+    className="glass-card hover-lift overflow-hidden group mb-2 md:mb-5"
   >
     <div className="relative overflow-hidden aspect-square bg-muted">
       <img
@@ -23,7 +23,7 @@ const ProductCard = ({ product }: { product: Product }) => (
       </span>
     </div>
     <div className="p-4">
-      <h3 className="font-heading font-semibold text-foreground text-lg mb-1 mb-4 line-clamp-1">{product.title}</h3>
+      <h3 className="font-heading font-semibold text-foreground text-lg mb-4 line-clamp-1">{product.title}</h3>
       {/* <p className="text-primary font-bold text-xl mb-3">₹{product.price.toLocaleString("en-IN")}</p> */}
       <Link to={`/product/${product.id}`}>
         <button className="w-full gradient-primary text-primary-foreground py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity text-sm">

@@ -1,6 +1,6 @@
 // src/pages/Admin/Dashboard.tsx
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Swal from "sweetalert2";
 
@@ -308,17 +308,30 @@ const AdminDashboard = () => {
             {/* Header */}
             <header className="bg-white shadow-sm border-b sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div className="flex justify-between items-center">
-                        <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+                    <div className="flex justify-between items-center gap-4">
+                        <Link to="/">
+                            <img
+                                src="/logo.png"
+                                alt="SGS RO - Water Purifier"
+                                className="h-12 md:h-14 w-auto object-contain"
+                            />
+                        </Link>
+
+                        <h1 className="text-xl md:text-2xl font-bold text-gray-800">
+                            Admin Dashboard
+                        </h1>
+
                         <button
                             onClick={handleLogout}
                             className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
                         >
                             Logout
                         </button>
+
                     </div>
                 </div>
             </header>
+
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Tabs */}

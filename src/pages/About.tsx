@@ -17,7 +17,7 @@ const About = () => {
     <div>
       {/* Banner */}
       <section className="gradient-hero text-primary-foreground py-16">
-        <div className="container text-center">
+        <div className="container px-2 md:px-8  text-center">
           <h1 className="font-heading text-3xl md:text-5xl font-bold mb-3">About Us</h1>
           <p className="text-primary-foreground/80 max-w-xl mx-auto">India's Leading Water Purifier Brand — Trusted by Thousands in Pune & PCMC</p>
         </div>
@@ -25,10 +25,10 @@ const About = () => {
 
       {/* Main About */}
       <section className="section-padding">
-        <div className="container">
+        <div className="container px-2 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <img src="https://res.cloudinary.com/juhojyvi/image/upload/v1784105824/about_ozsq6s.png" alt="SGS RO Water Purifier Pune" className="rounded-2xl shadow-lg w-full" />
+            <motion.div className=" w-full h-auto rounded-xl md:rounded-2xl shadow-lg object-cover " initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <img className="p-6" src="https://res.cloudinary.com/juhojyvi/image/upload/v1784105824/about_ozsq6s.png" alt="SGS RO Water Purifier Pune" />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <span className="text-secondary font-semibold text-sm uppercase tracking-wider">About Shree Gajanan Services</span>
@@ -46,7 +46,7 @@ const About = () => {
 
       {/* Mission/Vision */}
       <section className="section-padding water-bg">
-        <div className="container">
+        <div className="container px-2 md:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               { icon: Target, title: "Our Mission", text: "To provide affordable, high-quality water purification solutions to every household and business in Pune and across India." },
@@ -66,7 +66,7 @@ const About = () => {
 
       {/* Why SGS */}
       <section className="section-padding">
-        <div className="container">
+        <div className="container ">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">Why Choose SGS RO?</h2>
           </motion.div>
@@ -92,7 +92,7 @@ const About = () => {
 
       {/* Service Areas */}
       <section className="section-padding gradient-hero text-primary-foreground">
-        <div className="container text-center">
+        <div className="container px-2 md:px-8 text-center">
           <h2 className="font-heading text-3xl font-bold mb-8">Our Service Areas in Pune</h2>
           <div className="flex flex-wrap justify-center gap-3">
             {serviceAreas.map((area) => (

@@ -20,18 +20,18 @@ const AdminLogin = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+        <div className="min-h-screen py-5 md:py-0 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md"
+                className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md "
             >
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-gray-800">Admin Panel</h1>
                     <p className="text-gray-600 mt-2">Please login to continue</p>
                 </div>
 
-                <form onSubmit={handleLogin} className="space-y-6">
+                <form onSubmit={handleLogin} className="space-y-6 ">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Username
@@ -78,7 +78,7 @@ const AdminLogin = () => {
                     </button>
                 </form>
             </motion.div>
-        </div>
+        </div >
     );
 };
 
