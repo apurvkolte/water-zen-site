@@ -56,10 +56,17 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground font-body antialiased;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading;
   }
 }
@@ -68,29 +75,36 @@
   .gradient-primary {
     background: var(--gradient-primary);
   }
+
   .gradient-hero {
     background: var(--gradient-hero);
   }
+
   .text-gradient {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
   .glass-card {
     @apply bg-card/80 backdrop-blur-md border border-border/50 rounded-xl;
     box-shadow: var(--shadow-card);
   }
+
   .hover-lift {
     @apply transition-all duration-300;
   }
+
   .hover-lift:hover {
     transform: translateY(-6px);
     box-shadow: var(--shadow-elevated);
   }
+
   .section-padding {
     @apply py-16 md:py-24 px-4;
   }
+
   .water-bg {
     background: linear-gradient(180deg, hsl(207, 100%, 97%) 0%, hsl(207, 60%, 94%) 50%, hsl(90, 40%, 96%) 100%);
   }
@@ -105,10 +119,31 @@ html {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: hsl(var(--muted));
 }
+
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--primary));
   border-radius: 4px;
+}
+
+
+
+
+@layer utilities {
+
+  /* Chrome, Safari, and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE, Edge, and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
 }

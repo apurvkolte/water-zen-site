@@ -16,10 +16,18 @@ import AdminLogin from './pages/Admin/Login';
 import AdminDashboard from './pages/Admin/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <ToastContainer
+      position="top-right"
+      autoClose={2000}
+      hideProgressBar
+    />
     <TooltipProvider>
       <Sonner />
       <BrowserRouter>

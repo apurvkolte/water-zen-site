@@ -2,10 +2,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import Swal from "sweetalert2";
+
 // import { products, categories, sliderImages } from '@/data/products';
 import ProductModal from '@/components/admin/ProductModal';
 import CategoryModal from '@/components/admin/CategoryModal';
 import BannerModal from '@/components/admin/BannerModal';
+import { deleteWithConfirm } from "@/utils/deleteWithConfirm";
 
 import {
     deleteProduct,
@@ -23,11 +26,10 @@ import {
 } from "@/services/banners";
 
 
-
-
 import { Banner } from "@/services/banners";
 import { Category } from "@/services/categories";
 import { Product } from "@/services/products"
+import { toast } from 'react-toastify';
 
 // Sample data stores - in production, use a database
 // let productData = [...products];
@@ -40,7 +42,9 @@ const AdminDashboard = () => {
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [selectedBanner, setSelectedBanner] = useState<any>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+    const [productModalOpen, setProductModalOpen] = useState(false);
+    const [bannerModalOpen, setBannerModalOpen] = useState(false);
     // const [localProducts, setLocalProducts] = useState(productData);
     // const [localCategories, setLocalCategories] = useState(categoryData);
     // const [localBanners, setLocalBanners] = useState(bannerData);
@@ -109,12 +113,12 @@ const AdminDashboard = () => {
 
     const handleAddProduct = () => {
         setSelectedProduct(null);
-        setIsModalOpen(true);
+        setProductModalOpen(true);
     };
 
     const handleEditProduct = (product: any) => {
         setSelectedProduct(product);
-        setIsModalOpen(true);
+        setProductModalOpen(true);
     };
 
     // useEffect(() => {
@@ -132,172 +136,160 @@ const AdminDashboard = () => {
 
 
     const handleDeleteProduct = async (id: string) => {
-
-        if (!window.confirm("Delete product?")) {
-            return;
-        }
-
-
         try {
+            const deleted = await deleteWithConfirm({
+                title: "Delete Product?",
+                onDelete: async () => {
+                    await deleteProduct(id);
 
-            await deleteProduct(id);
+                    setLocalProducts(prev =>
+                        prev.filter(product => product.id !== id)
+                    );
+                },
+            });
 
 
-            setLocalProducts(prev =>
-                prev.filter(
-                    product => product.id !== id
-                )
-            );
-
-
+            if (deleted) {
+                toast.success("Product deleted successfully.");
+            }
         } catch (error) {
-
-            console.error(error);
-
-            alert("Product delete failed");
-
+            toast.error("Unable to delete product.");
         }
-
     };
 
     const handleSaveProduct = async () => {
+        const isEdit = !!selectedProduct;
 
-        const data = await getProducts();
+        try {
+            const data = await getProducts();
 
-        setLocalProducts(data);
+            setLocalProducts(data);
+            setProductModalOpen(false);
 
-        setIsModalOpen(false);
-
+            toast.success(
+                isEdit
+                    ? "Product updated successfully."
+                    : "Product added successfully."
+            );
+        } catch (error) {
+            toast.error("Unable to save product.");
+        }
     };
 
 
     const handleAddCategory = () => {
         setSelectedCategory(null);
-        setIsModalOpen(true);
+        setCategoryModalOpen(true);
     };
 
     const handleEditCategory = (category: Category) => {
         setSelectedCategory(category);
-        setIsModalOpen(true);
+        setCategoryModalOpen(true);
     };
 
-    const handleDeleteCategory = async (
-        category: Category
-    ) => {
-
-
+    const handleDeleteCategory = async (category: Category) => {
         if (category.name === "All") {
-            alert("Cannot delete All category");
+            Swal.fire({
+                icon: "warning",
+                title: "Not Allowed",
+                text: 'The "All" category cannot be deleted.',
+            });
             return;
         }
-
-
-        if (!window.confirm(`Delete ${category.name}?`)) {
-            return;
-        }
-
 
         try {
+            const deleted = await deleteWithConfirm({
+                title: `Delete "${category.name}"?`,
+                onDelete: async () => {
+                    await deleteCategory(category.id!);
 
-            await deleteCategory(
-                category.id!
-            );
+                    setLocalCategories(prev =>
+                        prev.filter(c => c.id !== category.id)
+                    );
+                },
+            });
 
 
-            setLocalCategories(prev =>
-                prev.filter(
-                    c => c.id !== category.id
-                )
-            );
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("Category delete failed");
-
+            if (deleted) {
+                toast.success("Category deleted successfully.");
+            }
+        } catch {
+            toast.error("Unable to delete category.");
         }
-
     };
 
     const handleSaveCategory = async () => {
+        const isEdit = !!selectedCategory;
 
-        const data = await getCategories();
+        try {
+            const data = await getCategories();
 
-        setLocalCategories(data);
+            setLocalCategories(data);
+            setCategoryModalOpen(false);
 
-        setIsModalOpen(false);
-
+            toast.success(
+                isEdit
+                    ? "Category updated successfully."
+                    : "Category added successfully."
+            );
+        } catch {
+            toast.error("Unable to save category.");
+        }
     };
 
 
 
     const handleAddBanner = () => {
         setSelectedBanner(null);
-        setIsModalOpen(true);
+        setBannerModalOpen(true);
     };
 
     const handleEditBanner = (banner: any) => {
         setSelectedBanner(banner);
-        setIsModalOpen(true);
+        setBannerModalOpen(true);
     };
 
-    const handleDeleteBanner = async (
-        id: string
-    ) => {
-
-
-        if (!window.confirm("Delete banner?")) {
-            return;
-        }
-
-
+    const handleDeleteBanner = async (id: string) => {
         try {
+            const deleted = await deleteWithConfirm({
+                title: "Delete Banner?",
+                onDelete: async () => {
+                    await deleteBanner(id);
+
+                    setLocalBanners(prev =>
+                        prev.filter(banner => banner.id !== id)
+                    );
+                },
+            });
 
 
-            await deleteBanner(id);
-
-
-            setLocalBanners(prev =>
-                prev.filter(
-                    banner => banner.id !== id
-                )
-            );
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("Banner delete failed");
-
+            if (deleted) {
+                toast.success("Banner deleted successfully.");
+            }
+        } catch {
+            toast.error("Unable to delete banner.");
         }
-
     };
 
-    const handleSaveBanner = async (
-        banner: Banner
-    ) => {
+    const handleSaveBanner = async () => {
+        const isEdit = !!selectedBanner;
 
         try {
-
             const data = await getBanners();
 
             setLocalBanners(data);
+            setBannerModalOpen(false);
 
-            setIsModalOpen(false);
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("Banner save failed");
-
+            toast.success(
+                isEdit
+                    ? "Banner updated successfully."
+                    : "Banner added successfully."
+            );
+        } catch {
+            toast.error("Unable to save banner.");
         }
-
     };
+
 
 
     if (isLoading) {
@@ -307,6 +299,9 @@ const AdminDashboard = () => {
             </div>
         );
     }
+
+
+
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -436,7 +431,13 @@ const AdminDashboard = () => {
                                             <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{index + 1}</td>
                                             <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{category.name}</td>
                                             <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {localProducts.filter(p => p.category === category.name).length}
+                                                {
+                                                    category.name === "All"
+                                                        ? Math.max(localProducts.length - 1, 0)
+                                                        : localProducts.filter(
+                                                            p => p.category === category.name
+                                                        ).length
+                                                }
                                             </td>
                                             <td className="px-4 py-4 whitespace-nowrap text-sm">
                                                 <button
@@ -522,29 +523,31 @@ const AdminDashboard = () => {
 
             {/* Modals */}
             <AnimatePresence>
-                {isModalOpen && activeTab === 'products' && (
+                {productModalOpen && (
                     <ProductModal
                         product={selectedProduct}
                         categories={localCategories}
                         onSave={handleSaveProduct}
-                        onClose={() => setIsModalOpen(false)}
+                        onClose={() => setProductModalOpen(false)}
                     />
                 )}
-                {isModalOpen && activeTab === 'categories' && (
+
+                {categoryModalOpen && (
                     <CategoryModal
                         category={selectedCategory}
                         categories={localCategories}
                         onSave={handleSaveCategory}
-                        onClose={() => setIsModalOpen(false)}
+                        onClose={() => setCategoryModalOpen(false)}
                     />
                 )}
-                {isModalOpen && activeTab === 'banners' && (
+                {bannerModalOpen && (
                     <BannerModal
                         banner={selectedBanner}
                         onSave={handleSaveBanner}
-                        onClose={() => setIsModalOpen(false)}
+                        onClose={() => setBannerModalOpen(false)}
                     />
                 )}
+
             </AnimatePresence>
         </div>
     );
